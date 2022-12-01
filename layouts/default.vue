@@ -1,122 +1,120 @@
 <template>
   <v-app dark>
-      <v-navigation-drawer permanent>
-          <v-list-item>
-            <v-avatar
-                color="primary"
-                size="38"
-              >
-              <span class="white--text text-h5">{{ user.initials }}</span>
-            </v-avatar>
-            <v-list-item-content>
-
-              <div>
-                <v-list-item-title class="text-h6">
-                  {{user.organization}}
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                  {{user.email}}
-                </v-list-item-subtitle>
-              </div>
-
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-divider></v-divider>
-
-          <v-list
-            dense
-            nav
-          >
-            <v-list-item
-              v-for="item in items"
-              :key="item.title"
-              :to="item.to"
-              link
-            >
-              <v-list-item-icon>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-list
-            dense
-            nav
-          >
-          <div class="nav-section-title">
-            <span>Track</span>
+    <v-navigation-drawer permanent>
+      <v-list-item>
+        <v-avatar
+          color="primary"
+          size="38"
+        >
+          <span class="white--text text-h5">
+            {{ user.initials }}
+          </span>
+        </v-avatar>
+        <v-list-item-content>
+          <div>
+            <v-list-item-title class="text-h6">
+              {{ user.organization }}
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              {{ user.email }}
+            </v-list-item-subtitle>
           </div>
-          <v-list-item
-              v-for="task in tasks"
-              :key="task.title"
-              :to="task.to"
-              link
-            >
-              <v-list-item-icon>
-                <v-icon>{{ task.icon }}</v-icon>
-              </v-list-item-icon>
+        </v-list-item-content>
+      </v-list-item>
 
-              <v-list-item-content>
-                <v-list-item-title>{{ task.title }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-list
-            dense
-            nav
-          >
-          <div class="nav-section-title">
-            <span>analyse</span>
-          </div>
-          <v-list-item
-              v-for="analyse in analyses"
-              :key="analyse.title"
-              :to="analyse.to"
-              link
-            >
-              <v-list-item-icon>
-                <v-icon>{{ analyse.icon }}</v-icon>
-              </v-list-item-icon>
+      <v-divider />
 
-              <v-list-item-content>
-                <v-list-item-title>{{ analyse.title }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-list
-            dense
-            nav
-          >
-          <div class="nav-section-title">
-            <span>workspace</span>
-          </div>
-          <v-list-item
-              v-for="workspace in workspaces"
-              :key="workspace.title"
-              link
-            >
-              <v-list-item-icon>
-                <v-icon>{{ workspace.icon }}</v-icon>
-              </v-list-item-icon>
+      <v-list
+        dense
+        nav
+      >
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :to="item.to"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-              <v-list-item-content>
-                <v-list-item-title>{{ workspace.title }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-      </v-navigation-drawer>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list
+        dense
+        nav
+      >
+        <div class="nav-section-title">
+          <span>Track</span>
+        </div>
+        <v-list-item
+          v-for="task in tasks"
+          :key="task.title"
+          :to="task.to"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ task.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ task.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list
+        dense
+        nav
+      >
+        <div class="nav-section-title">
+          <span>analyse</span>
+        </div>
+        <v-list-item
+          v-for="analyse in analyses"
+          :key="analyse.title"
+          :to="analyse.to"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ analyse.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ analyse.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list
+        dense
+        nav
+      >
+        <div class="nav-section-title">
+          <span>workspace</span>
+        </div>
+        <v-list-item
+          v-for="workspace in workspaces"
+          :key="workspace.title"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ workspace.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ workspace.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-
-
   </v-app>
 </template>
 
@@ -169,8 +167,7 @@ export default {
       section: [
         {
           title: 'track',
-          
-          
+
         }
       ],
       user: {
@@ -181,10 +178,9 @@ export default {
         email: 'lcristal@evian.com'
       }
 
-
     }
   },
-  
+
 }
 </script>
 
