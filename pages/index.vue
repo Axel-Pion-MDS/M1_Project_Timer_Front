@@ -7,23 +7,21 @@
       </v-card>
       <v-card>
         <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
+          template
         </v-card-title>
         <v-card-text>
           <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
+            component framework for Vue.js. It was designed to empower
+            developers to create amazing applications.
           </p>
           <p>
-            For more information on Vuetify, check out the
+            tteesssss
             <a
               href="https://vuetifyjs.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              documentation </a
-            >.
+              documentation </a>.
           </p>
           <p>
             If you have questions, please join the official
@@ -33,8 +31,7 @@
               rel="noopener noreferrer"
               title="chat"
             >
-              discord </a
-            >.
+              discord </a>.
           </p>
           <p>
             Find a bug? Report it on the github
@@ -44,8 +41,7 @@
               rel="noopener noreferrer"
               title="contribute"
             >
-              issue board </a
-            >.
+              issue board </a>.
           </p>
           <p>
             Thank you for developing with Vuetify and I look forward to bringing
@@ -54,7 +50,7 @@
           <div class="text-xs-right">
             <em><small>&mdash; John Leider</small></em>
           </div>
-          <hr class="my-3" />
+          <hr class="my-3">
           <a
             href="https://nuxtjs.org/"
             target="_blank"
@@ -62,7 +58,7 @@
           >
             Nuxt Documentation
           </a>
-          <br />
+          <br>
           <a
             href="https://github.com/nuxt/nuxt.js"
             target="_blank"
@@ -73,7 +69,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
+          <v-btn color="primary" nuxt to="/inspire">
+            Continue
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
