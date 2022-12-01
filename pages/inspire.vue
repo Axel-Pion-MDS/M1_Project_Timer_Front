@@ -1,29 +1,18 @@
 <template>
-  <v-card
-    :loading="loading"
-    class="mx-auto my-12"
-    max-width="374"
-  >
+  <v-card :loading="loading" class="mx-auto my-12" max-width="374">
     <template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
+      <v-progress-linear color="deep-purple" height="10" indeterminate />
     </template>
 
     <v-img
       height="250"
       src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-    ></v-img>
+    />
 
     <v-card-title>Cafe Badilico</v-card-title>
 
     <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
+      <v-row align="center" class="mx-0">
         <v-rating
           :value="4.5"
           color="amber"
@@ -31,7 +20,7 @@
           half-increments
           readonly
           size="14"
-        ></v-rating>
+        />
 
         <div class="grey--text ms-4">
           4.5 (413)
@@ -42,10 +31,13 @@
         $ • Italian, Cafe
       </div>
 
-      <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+      <div>
+        Small plates, salads & sandwiches - an intimate setting with 12 indoor
+        seats plus patio seating.
+      </div>
     </v-card-text>
 
-    <v-divider class="mx-4"></v-divider>
+    <v-divider class="mx-4" />
 
     <v-card-title>Tonight's availability</v-card-title>
 
@@ -66,11 +58,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-        @click="reserve"
-      >
+      <v-btn color="deep-purple lighten-2" text @click="reserve">
         Reserve
       </v-btn>
     </v-card-actions>
@@ -78,25 +66,25 @@
 </template>
 
 <script>
-  export default {
-    name: "InspirePage",
-    data: () => ({
-      loading: false,
-      selection: 1,
-    }),
+export default {
+  name: 'InspirePage',
+  data: () => ({
+    loading: false,
+    selection: 1,
+  }),
 
-    methods: {
-      reserve () {
-        this.loading = true
+  methods: {
+    reserve() {
+      this.loading = true
 
-        setTimeout(() => (this.loading = false), 2000)
-      },
+      setTimeout(() => (this.loading = false), 2000)
     },
-  }
+  },
+}
 </script>
 
 <style lang="scss">
-  .ymca {
-    color: $test; // will be resolved to #333
-  }
+.ymca {
+  color: $test; // will be resolved to #333
+}
 </style>
