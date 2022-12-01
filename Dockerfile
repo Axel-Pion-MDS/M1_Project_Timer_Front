@@ -2,7 +2,7 @@ FROM node:16
 
 WORKDIR /client
 
-COPY package*.json /client/
+COPY package*.json /.
 
 RUN npm install
 

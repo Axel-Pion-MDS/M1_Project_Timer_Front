@@ -8,5 +8,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - '.:/client'
-      - '/client/node_modules'
+      - .:/client
+      - client_node_modules:/client/node_modules
+      - client_nuxt:/client/.nuxt
+volumes:
+  client_node_modules:
+  client_nuxt:
