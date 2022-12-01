@@ -277,13 +277,8 @@ export default {
 .wap-form{
   margin: auto auto;
 }
-<<<<<<< HEAD
 .container-mb{
   display: flex;
   justify-content: center;
 }
 </style>
-=======
-
-</style>
->>>>>>> 805177c (feat:merge modif return)
