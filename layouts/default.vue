@@ -1,64 +1,119 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </v-app-bar>
+      <v-navigation-drawer permanent>
+          <v-list-item>
+            <v-avatar
+                color="primary"
+                size="38"
+              >
+              <span class="white--text text-h5">{{ user.initials }}</span>
+            </v-avatar>
+            <v-list-item-content>
+
+              <div>
+                <v-list-item-title class="text-h6">
+                  {{user.organization}}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  {{user.email}}
+                </v-list-item-subtitle>
+              </div>
+
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list
+            dense
+            nav
+          >
+            <v-list-item
+              v-for="item in items"
+              :key="item.title"
+              link
+            >
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list
+            dense
+            nav
+          >
+          <div class="nav-section-title">
+            <span>Track</span>
+          </div>
+          <v-list-item
+              v-for="task in tasks"
+              :key="task.title"
+              link
+            >
+              <v-list-item-icon>
+                <v-icon>{{ task.icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ task.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list
+            dense
+            nav
+          >
+          <div class="nav-section-title">
+            <span>analyse</span>
+          </div>
+          <v-list-item
+              v-for="analyse in analyses"
+              :key="analyse.title"
+              link
+            >
+              <v-list-item-icon>
+                <v-icon>{{ analyse.icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ analyse.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list
+            dense
+            nav
+          >
+          <div class="nav-section-title">
+            <span>workspace</span>
+          </div>
+          <v-list-item
+              v-for="workspace in workspaces"
+              :key="workspace.title"
+              link
+            >
+              <v-list-item-icon>
+                <v-icon>{{ workspace.icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ workspace.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+      </v-navigation-drawer>
+
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+
+
   </v-app>
 </template>
 
@@ -67,26 +122,81 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'mdi-magnify',
+          title: 'Search',
           to: '/',
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          icon: 'mdi-cog',
+          title: 'Settings',
+          to: '/settings',
         },
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
+      tasks: [{
+        icon: 'mdi-clock-time-four-outline',
+        title: 'Tasks',
+        to: '/tasks',
+      }],
+      analyses: [
+        {
+          icon: 'mdi-calendar-month-outline',
+          title: 'Calender',
+          to: '/calender',
+        },
+        {
+          icon: 'mdi-chart-line',
+          title: 'Charts',
+          to: '/charts',
+        }
+      ],
+      workspaces: [
+        {
+          icon: 'mdi-briefcase-outline',
+          title: 'Projects',
+          to: '/projects',
+        },
+        {
+          icon: 'mdi-account-group-outline',
+          title: 'Teams',
+          to: '/teams',
+        }
+      ],
+      user: {
+        firstName: 'Leo',
+        lastName: 'Cristal',
+        initials: 'LC',
+        organization: 'evian',
+        email: 'lcristal@evian.com'
+      }
+
+
     }
   },
+  
 }
 </script>
+
+<style lang="scss">
+
+.theme--dark.v-navigation-drawer {
+    background-color: $bg-light-color;
+}
+
+.v-application--wrap {
+  flex-direction: row;
+}
+.v-list-item__content {
+    flex-direction: column;
+}
+.nav-section-title {
+  margin: 10px;
+  text-transform: uppercase;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 24px;
+}
+</style>
