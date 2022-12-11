@@ -31,6 +31,7 @@
             <v-list-item
               v-for="item in items"
               :key="item.title"
+              :to="item.to"
               link
             >
               <v-list-item-icon>
@@ -52,6 +53,7 @@
           <v-list-item
               v-for="task in tasks"
               :key="task.title"
+              :to="task.to"
               link
             >
               <v-list-item-icon>
@@ -73,6 +75,7 @@
           <v-list-item
               v-for="analyse in analyses"
               :key="analyse.title"
+              :to="analyse.to"
               link
             >
               <v-list-item-icon>
@@ -125,7 +128,7 @@ export default {
       items: [
         {
           icon: 'mdi-magnify',
-          title: 'Search',
+          title: 'Home',
           to: '/',
         },
         {
