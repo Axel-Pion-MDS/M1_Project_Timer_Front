@@ -32,8 +32,7 @@ export default {
   scss: ['./assets/*.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: ['~/plugins/apis.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -53,7 +52,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:4000'
+    baseURL: 'http://localhost:8000'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
