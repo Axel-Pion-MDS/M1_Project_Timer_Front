@@ -1,5 +1,3 @@
-import { login } from '~/services/UserService'
-
 export const state = () => ({
   user: {}
 })
@@ -18,7 +16,7 @@ export const getters = {
 
 export const actions = {
   async login({ state }, user) {
-    const response = await login(user)
+    const response = await this.$apis.user.login(user)
     state.user = response.data.user
     return response.data
   },
