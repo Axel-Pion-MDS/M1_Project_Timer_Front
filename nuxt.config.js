@@ -53,7 +53,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: '/'
+    baseURL: 'http://localhost:4000'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -63,7 +63,7 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: '#ECEBC4',
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
