@@ -5,15 +5,15 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: "@babel/eslint-parser",
+    parser: '@babel/eslint-parser',
     requireConfigFile: false,
   },
-  extends: ["@nuxtjs", "plugin:nuxt/recommended"],
+  extends: ['@nuxtjs', 'plugin:nuxt/recommended'],
   plugins: [],
   // add your custom rules here
   rules: {
-    "vue/max-attributes-per-line": [
-      "error",
+    'vue/max-attributes-per-line': [
+      'error',
       {
         singleline: {
           max: 3,
@@ -23,16 +23,16 @@ module.exports = {
         },
       },
     ],
-    "vue/singleline-html-element-content-newline": [
-      "error",
+    'vue/singleline-html-element-content-newline': [
+      'error',
       {
         ignoreWhenNoAttributes: true,
         ignoreWhenEmpty: true,
-        ignores: ["pre", "textarea"],
+        ignores: ['pre', 'textarea'],
       },
     ],
-    "vue/max-len": [
-      "error",
+    'vue/max-len': [
+      'error',
       {
         code: 80,
         template: 120,
@@ -42,11 +42,11 @@ module.exports = {
         ignoreStrings: false,
       },
     ],
-    "comma-dangle": ["error", "only-multiline"],
-    "no-multiple-empty-lines": "warn",
-    "space-before-function-paren": "off",
-    "vue/multi-word-component-names": "off",
-    "vue/no-v-text-v-html-on-component": "off",
-    "no-use-before-define": "warn",
+    'comma-dangle': ['error', 'only-multiline'],
+    'no-multiple-empty-lines': 'warn',
+    'space-before-function-paren': 'off',
+    'vue/multi-word-component-names': 'off',
+    'vue/no-v-text-v-html-on-component': 'off',
+    'no-use-before-define': 'warn',
   },
-};
+}
