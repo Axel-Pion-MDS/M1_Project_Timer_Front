@@ -29,7 +29,7 @@
           class="black--text"
           :disabled="!valid"
           color="primary"
-          @click="login"
+          @click="fetchSomething"
         >
           Login
         </v-btn>
@@ -63,6 +63,11 @@ export default {
     },
     login() {
       this.$store.dispatch('user/login', this.form)
+    },
+    async fetchSomething() {
+      const ip = await this.$axios.$get('/user')
+      console.log(ip)
+      alert('test')
     }
   }
 }
