@@ -29,7 +29,7 @@
           class="black--text"
           :disabled="!valid"
           color="primary"
-          @click="fetchSomething"
+          @click="login"
         >
           Login
         </v-btn>
@@ -46,7 +46,7 @@ export default {
     form: {
       email: '',
       password: ''
-    }
+    },
   }),
   methods: {
     test() {
@@ -61,13 +61,8 @@ export default {
     resetValidation () {
       this.$refs.formulaire.resetValidation()
     },
-    login() {
-      this.$store.dispatch('user/login', this.form)
-    },
-    async fetchSomething() {
-      const ip = await this.$axios.$get('/user')
-      console.log(ip)
-      alert('test')
+    async login() {
+      await this.$store.dispatch('user/login', this.form)
     }
   }
 }

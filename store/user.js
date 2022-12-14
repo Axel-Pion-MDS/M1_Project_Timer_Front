@@ -8,16 +8,17 @@ export const getters = {
   }
 }
 
-// export const mutations = {
-//   setUser(state, user) {
-//     state.user = user
-//   },
-// }
+export const mutations = {
+  setUser(state, user) {
+    state.user = user
+  },
+}
 
 export const actions = {
-  async login({ state }, user) {
-    const response = await this.$apis.user.login(user)
-    state.user = response.data.user
+  async login({ commit }, form) {
+    const response = await this.$apis.user.login(form)
+    console.log(response.data.user)
+    commit('setUser', response.data.user)
     return response.data
   },
 
