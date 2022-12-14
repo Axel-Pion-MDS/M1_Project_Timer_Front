@@ -11,6 +11,7 @@
             sm="4"
           >
             <v-select
+              v-model="selected"
               :items="projects"
               item-text="label"
               label="Projects"
@@ -18,12 +19,13 @@
               outlined
             />
           </v-col>
+          {{ selected }}
         </v-row>
       </v-container>
     </div>
     <div class="task-grid">
       <v-card
-        v-for="task in tasks"
+        v-for="task in filteredCards"
         :key="task.id"
         elevation="2"
       >
@@ -43,6 +45,29 @@
         </div>
       </v-card>
     </div>
+  </div>
+  <div class="task-grid">
+    <v-card
+      v-for="task in tasks"
+      :key="task.id"
+      elevation="2"
+    >
+      <v-card-title>{{ task.label }}</v-card-title>
+      <v-card-text>{{ task.description }}</v-card-text>
+      <div>
+        <div>
+          <span>{{ task.start }}</span>
+          <span class="arrow_right" />
+          <span>{{ task.end }}</span>
+        </div>
+        <v-card-actions>
+          <v-btn color="error" @click="deleteItem(task.id)">
+            Supprimer
+          </v-btn>
+        </v-card-actions>
+      </div>
+    </v-card>
+  </div>
   </div>
 </template>
 
@@ -95,8 +120,19 @@ export default {
 
     }
   },
+  computed: {
+    filteredCards() {
+      if (this.selected) {
+        console.log('ici')
+        return this.tasks.filter(task => task.projectLabel === this.selected)
+      }
+      return this.tasks
+    },
+  },
   methods: {
+    deleteItem() {
 
+    }
   }
 }
 

@@ -184,7 +184,7 @@ export default {
         {
           icon: 'mdi-magnify',
           title: 'Home',
-          to: '/',
+          to: '/search',
         },
         {
           icon: 'mdi-cog',
@@ -195,7 +195,7 @@ export default {
       tasks: [{
         icon: 'mdi-clock-time-four-outline',
         title: 'Tasks',
-        to: '/tasks',
+        to: '/',
       }],
       analyses: [
         {
