@@ -1,10 +1,15 @@
+import { decode } from 'jsonwebtoken'
 export const state = () => ({
-  user: {}
+  user: {},
+  token: null
 })
 
 export const getters = {
-  getUser(state) {
+  getUserInfo(state) {
     return state.user
+  },
+  userIsConnected(state) {
+    return state.token
   }
 }
 
@@ -12,14 +17,30 @@ export const mutations = {
   setUser(state, user) {
     state.user = user
   },
+  setToken(state, token) {
+    state.token = decode(token)
+  },
 }
 
 export const actions = {
   async login({ commit }, form) {
     const response = await this.$apis.user.login(form)
-    console.log(response.data.user)
-    commit('setUser', response.data.user)
-    return response.data
+    if (response) {
+      localStorage.setItem('JWT', response.data.token)
+      commit('setUser', response.data.user)
+      commit('setToken', response.data.token)
+      return true
+    }
+    return false
   },
+
+  getToken({ commit }) {
+    if (localStorage.getItem('JWT')) {
+      const token = localStorage.getItem('JWT')
+      commit('setToken', token)
+      return true
+    }
+    return false
+  }
 
 }
