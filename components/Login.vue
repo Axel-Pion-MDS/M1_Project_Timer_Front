@@ -1,5 +1,10 @@
 <template>
-  <v-form ref="formulaire" v-model="valid">
+  <v-form
+    ref="formulaire"
+    v-model="valid"
+    lazy-validation
+    @submit.prevent="login"
+  >
     <v-container>
       <v-row class="d-flex flex-column">
         <v-col
@@ -9,6 +14,7 @@
             v-model="form.email"
             :rules="[rules.required(), rules.isEmail()]"
             label="E-mail"
+            validate-on-blur
             outlined
             required
           />
@@ -21,6 +27,7 @@
             type="password"
             :rules="[rules.required()]"
             label="Password"
+            validate-on-blur
             outlined
             required
           />
@@ -29,7 +36,7 @@
           class="black--text"
           :disabled="!valid"
           color="primary"
-          @click="login"
+          type="submit"
         >
           Login
         </v-btn>
@@ -63,6 +70,7 @@ export default {
     },
     async login() {
       await this.$store.dispatch('user/login', this.form)
+      this.reset()
     }
   }
 }
