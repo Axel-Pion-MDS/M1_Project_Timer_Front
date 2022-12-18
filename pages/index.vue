@@ -1,11 +1,11 @@
-<template>
+<template v-slot:activator="{ on, attrs }">
     <div class="header">
       
       <h1>My Tasks</h1>
       <div>
         <h3>Projects</h3>
           <v-container fluid>
-            <v-row align="center">
+            <v-row class="align-center">
               <v-col
                 class="d-flex"
                 cols="12"
@@ -32,7 +32,7 @@
           <v-card-title>{{ task.label }}</v-card-title>
           <v-card-text>{{ task.description }}</v-card-text>
           <div>
-            <div>
+            <div class="time-info">
               <span>{{ task.start }}</span>
               <span class="arrow_right"></span>
               <span>{{ task.end }}</span>
@@ -41,11 +41,109 @@
               <v-btn @click="deleteItem(task.id)" color="error">
                 Supprimer
               </v-btn>
+
+              <v-btn @click="showModal = true">Afficher la fenêtre modale</v-btn>
+              <v-dialog v-model="showModal" max-width="650">
+                <v-card>
+                  <div class="container-mb">
+                    <v-col cols="5">
+                    <v-autocomplete
+                      v-model="valuesUser"
+                      :items="users"
+                      item-text="name"
+                      item-value="id"
+                      outlined
+                      dense
+                      chips
+                      small-chips
+                      label="assign to a member"
+                      multiple
+                    ></v-autocomplete>
+
+                  </v-col>
+                  <v-col cols="5">
+                    <v-autocomplete
+                      v-model="valuesProject"
+                      :items="projects"
+                      item-text="label"
+                      item-value="id"
+                      outlined
+                      dense
+                      chips
+                      small-chips
+                      label="Project"
+                      multiple
+                    ></v-autocomplete>
+
+                  </v-col>
+                  </div>
+                  <v-col
+                    cols="12"
+                    sm="10"
+                    class="wap-form"
+                  >
+                    <v-textarea
+                    v-model="title"
+                    auto-grow
+                    filled
+                    color="deep-purple"
+                    label="Title"
+                    rows="1"
+                  ></v-textarea>
+                  <v-textarea
+                    v-model="description"
+                    auto-grow
+                    filled
+                    color="deep-purple"
+                    label="Description"
+                    rows="4"
+                  ></v-textarea>
+                  <div class="containe-selectedDate">
+                    <div class="selectedDate">
+                      <v-text-field
+                        v-model="selectedDate"
+                        @click="showDatePicker = true"
+                        label="Beginning of the task"
+                        placeholder="Cliquez pour sélectionner une date"
+                      ></v-text-field>
+                      <v-date-picker
+                        v-if="showDatePicker"
+                        v-model="selectedDate"
+                        @input="showDatePicker = false"
+                      ></v-date-picker>
+                    </div>
+                    <div class="selectedDate">
+                      <v-text-field
+                        v-model="selectedDate2"
+                        @click="showDatePicker2 = true"
+                        label="End of the task"
+                        placeholder="Cliquez pour sélectionner une date"
+                      ></v-text-field>
+                      <v-date-picker
+                        v-if="showDatePicker2"
+                        v-model="selectedDate2"
+                        @input="showDatePicker2 = false"
+                        type="date"
+                        time-picker
+                      ></v-date-picker>
+                    </div>
+                  </div>
+
+                  </v-col>
+
+
+                  <v-card-actions>
+                    <v-btn color="primary" @click="showModal = false">Fermer</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
             </v-card-actions>
           </div>
       </v-card>
       </div>
     </div>
+    
 </template>
 
 <script>
@@ -84,6 +182,17 @@ export default {
         
       ],
       selected: null,
+      showModal: false,
+      valuesUser: [],
+      valuesProject: [],
+      users: [{
+        id: 1,
+        name: 'leo',
+      },
+      {
+        id: 2,
+        name: 'lea',
+      },],
       projects: [
           {
             label: 'projects01',
@@ -94,8 +203,10 @@ export default {
             nb_projects: 1,
           },
       ],
-
-
+      selectedDate: null,
+      showDatePicker: false,
+      selectedDate2: null,
+      showDatePicker2: false,
     }
   },
   computed: {
@@ -136,5 +247,24 @@ export default {
   border-top : 5px solid transparent;
   border-bottom : 6px solid transparent;
   border-left : 12px solid $button-color;
+  margin:0 5px;
+}
+
+.time-info{
+  padding-left:16px ;
+}
+.selectedDate{
+  width: 40%;
+}
+.containe-selectedDate{
+  display: flex;
+  justify-content: space-between;
+}
+.wap-form{
+  margin: auto auto;
+}
+.container-mb{
+  display: flex;
+  justify-content: center;
 }
 </style>
