@@ -43,98 +43,103 @@
             </v-btn>
 
             <v-btn @click="showModal = true">
-              Afficher la fenêtre modale
+              Edit
             </v-btn>
             <v-dialog v-model="showModal" max-width="650">
               <v-card>
-                <div class="container-mb">
-                  <v-col cols="5">
-                    <v-autocomplete
-                      v-model="valuesUser"
-                      :items="users"
-                      item-text="name"
-                      item-value="id"
-                      outlined
-                      dense
-                      chips
-                      small-chips
-                      label="assign to a member"
-                      multiple
-                    />
-                  </v-col>
-                  <v-col cols="5">
-                    <v-autocomplete
-                      v-model="valuesProject"
-                      :items="projects"
-                      item-text="label"
-                      item-value="id"
-                      outlined
-                      dense
-                      chips
-                      small-chips
-                      label="Project"
-                      multiple
-                    />
-                  </v-col>
-                </div>
-                <v-col
-                  cols="12"
-                  sm="10"
-                  class="wap-form"
-                >
-                  <v-textarea
-                    v-model="title"
-                    auto-grow
-                    filled
-                    color="deep-purple"
-                    label="Title"
-                    rows="1"
-                  />
-                  <v-textarea
-                    v-model="description"
-                    auto-grow
-                    filled
-                    color="deep-purple"
-                    label="Description"
-                    rows="4"
-                  />
-                  <div class="containe-selectedDate">
-                    <div class="selectedDate">
-                      <v-text-field
-                        v-model="selectedDate"
-                        label="Beginning of the task"
-                        placeholder="Cliquez pour sélectionner une date"
-                        @click="showDatePicker = true"
+                <form @submit.prevent="submitForm">
+                  <div class="container-mb">
+                    <v-col cols="5">
+                      <v-autocomplete
+                        v-model="form.assignMenber"
+                        :items="users"
+                        item-text="name"
+                        item-value="id"
+                        outlined
+                        dense
+                        chips
+                        small-chips
+                        label="assign to a member"
+                        multiple
                       />
-                      <v-date-picker
-                        v-if="showDatePicker"
-                        v-model="selectedDate"
-                        @input="showDatePicker = false"
+                    </v-col>
+                    <v-col cols="5">
+                      <v-autocomplete
+                        v-model="form.assignProject"
+                        :items="projects"
+                        item-text="label"
+                        item-value="id"
+                        outlined
+                        dense
+                        chips
+                        small-chips
+                        label="Project"
+                        multiple
                       />
-                    </div>
-                    <div class="selectedDate">
-                      <v-text-field
-                        v-model="selectedDate2"
-                        label="End of the task"
-                        placeholder="Cliquez pour sélectionner une date"
-                        @click="showDatePicker2 = true"
-                      />
-                      <v-date-picker
-                        v-if="showDatePicker2"
-                        v-model="selectedDate2"
-                        type="date"
-                        time-picker
-                        @input="showDatePicker2 = false"
-                      />
-                    </div>
+                    </v-col>
                   </div>
-                </v-col>
+                  <v-col
+                    cols="12"
+                    sm="10"
+                    class="wap-form"
+                  >
+                    <v-textarea
+                      v-model="form.title"
+                      auto-grow
+                      filled
+                      color="deep-purple"
+                      label="Title"
+                      rows="1"
+                    />
+                    <v-textarea
+                      v-model="form.description"
+                      auto-grow
+                      filled
+                      color="deep-purple"
+                      label="Description"
+                      rows="4"
+                    />
+                    <div class="containe-selectedDate">
+                      <div class="selectedDate">
+                        <v-text-field
+                          v-model="selectedDate"
+                          label="Beginning of the task"
+                          placeholder="Cliquez pour sélectionner une date"
+                          @click="showDatePicker = true"
+                        />
+                        <v-date-picker
+                          v-if="showDatePicker"
+                          v-model="selectedDate"
+                          @input="showDatePicker = false"
+                        />
+                      </div>
+                      <div class="selectedDate">
+                        <v-text-field
+                          v-model="selectedDate2"
+                          label="End of the task"
+                          placeholder="Cliquez pour sélectionner une date"
+                          @click="showDatePicker2 = true"
+                        />
+                        <v-date-picker
+                          v-if="showDatePicker2"
+                          v-model="selectedDate2"
+                          type="date"
+                          time-picker
+                          @input="showDatePicker2 = false"
+                        />
+                      </div>
+                    </div>
+                  </v-col>
 
-                <v-card-actions>
-                  <v-btn color="primary" @click="showModal = false">
-                    Fermer
-                  </v-btn>
-                </v-card-actions>
+                  <v-card-actions>
+                    <v-btn color="primary" type="submit">
+                      Submit
+                    </v-btn>
+                    <v-btn color="primary" @click="showModal = false">
+                      Fermer
+                    </v-btn>
+                  </v-card-actions>
+                </form>
               </v-card>
             </v-dialog>
           </v-card-actions>
@@ -205,6 +210,14 @@ export default {
       showDatePicker: false,
       selectedDate2: null,
       showDatePicker2: false,
+      form: {
+        description: null,
+        title: null,
+        assignMenber: null,
+        startAt: null,
+        endAt: null,
+        assignProject: null
+      }
     }
   },
   computed: {
@@ -219,6 +232,9 @@ export default {
   methods: {
     deleteItem() {
 
+    },
+    submitForm() {
+      console.log(this.form)
     }
   }
 }
