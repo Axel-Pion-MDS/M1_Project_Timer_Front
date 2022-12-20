@@ -32,7 +32,7 @@
         <v-card-title>{{ task.label }}</v-card-title>
         <v-card-text>{{ task.description }}</v-card-text>
         <div>
-          <div class="time-info">
+          <div class="pl-4">
             <span>{{ task.start }}</span>
             <span class="arrow_right" />
             <span>{{ task.end }}</span>
@@ -48,7 +48,7 @@
             <v-dialog v-model="showModal" max-width="650">
               <v-card>
                 <form @submit.prevent="submitForm">
-                  <div class="container-mb">
+                  <div class="d-flex justify-center">
                     <v-col cols="5">
                       <v-autocomplete
                         v-model="form.assignMenber"
@@ -98,35 +98,42 @@
                       color="deep-purple"
                       label="Description"
                       rows="4"
+                      <<<<<<<
+                      h-e-a-d
                     />
                     <div class="containe-selectedDate">
-                      <div class="selectedDate">
-                        <v-text-field
-                          v-model="selectedDate"
-                          label="Beginning of the task"
-                          placeholder="Cliquez pour sélectionner une date"
-                          @click="showDatePicker = true"
-                        />
-                        <v-date-picker
-                          v-if="showDatePicker"
-                          v-model="selectedDate"
-                          @input="showDatePicker = false"
-                        />
-                      </div>
-                      <div class="selectedDate">
-                        <v-text-field
-                          v-model="selectedDate2"
-                          label="End of the task"
-                          placeholder="Cliquez pour sélectionner une date"
-                          @click="showDatePicker2 = true"
-                        />
-                        <v-date-picker
-                          v-if="showDatePicker2"
-                          v-model="selectedDate2"
-                          type="date"
-                          time-picker
-                          @input="showDatePicker2 = false"
-                        />
+                      =======
+                      ></v-textarea>
+                      <div class="d-flex justify-space-between">
+                        >>>>>>> 805177c (feat:merge modif return)
+                        <div class="selectedDate">
+                          <v-text-field
+                            v-model="selectedDate"
+                            label="Beginning of the task"
+                            placeholder="Cliquez pour sélectionner une date"
+                            @click="showDatePicker = true"
+                          />
+                          <v-date-picker
+                            v-if="showDatePicker"
+                            v-model="selectedDate"
+                            @input="showDatePicker = false"
+                          />
+                        </div>
+                        <div class="selectedDate">
+                          <v-text-field
+                            v-model="selectedDate2"
+                            label="End of the task"
+                            placeholder="Cliquez pour sélectionner une date"
+                            @click="showDatePicker2 = true"
+                          />
+                          <v-date-picker
+                            v-if="showDatePicker2"
+                            v-model="selectedDate2"
+                            type="date"
+                            time-picker
+                            @input="showDatePicker2 = false"
+                          />
+                        </div>
                       </div>
                     </div>
                   </v-col>
@@ -263,21 +270,20 @@ export default {
   margin:0 5px;
 }
 
-.time-info{
-  padding-left:16px ;
-}
 .selectedDate{
   width: 40%;
 }
-.containe-selectedDate{
-  display: flex;
-  justify-content: space-between;
-}
+
 .wap-form{
   margin: auto auto;
 }
+<<<<<<< HEAD
 .container-mb{
   display: flex;
   justify-content: center;
 }
 </style>
+=======
+
+</style>
+>>>>>>> 805177c (feat:merge modif return)
