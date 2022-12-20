@@ -32,7 +32,7 @@
           <v-card-title>{{ task.label }}</v-card-title>
           <v-card-text>{{ task.description }}</v-card-text>
           <div>
-            <div class="time-info">
+            <div class="pl-4">
               <span>{{ task.start }}</span>
               <span class="arrow_right"></span>
               <span>{{ task.end }}</span>
@@ -47,7 +47,7 @@
                 <v-card>
                   <form @submit.prevent="submitForm">
                     
-                    <div class="container-mb">
+                    <div class="d-flex justify-center">
                       <v-col cols="5">
                       <v-autocomplete
                         v-model="form.assignMenber"
@@ -100,7 +100,7 @@
                       label="Description"
                       rows="4"
                     ></v-textarea>
-                    <div class="containe-selectedDate">
+                    <div class="d-flex justify-space-between">
                       <div class="selectedDate">
                         <v-text-field
                           v-model="selectedDate"
@@ -265,21 +265,12 @@ export default {
   margin:0 5px;
 }
 
-.time-info{
-  padding-left:16px ;
-}
 .selectedDate{
   width: 40%;
 }
-.containe-selectedDate{
-  display: flex;
-  justify-content: space-between;
-}
+
 .wap-form{
   margin: auto auto;
 }
-.container-mb{
-  display: flex;
-  justify-content: center;
-}
+
 </style>
