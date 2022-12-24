@@ -25,7 +25,7 @@ export const mutations = {
 export const actions = {
   async login({ commit }, form) {
     const response = await this.$apis.user.login(form)
-    if (response) {
+    if (response.data.token) {
       localStorage.setItem('JWT', response.data.token)
       commit('setUser', response.data.user)
       commit('setToken', response.data.token)
