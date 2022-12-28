@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "vetur.validation.template": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
