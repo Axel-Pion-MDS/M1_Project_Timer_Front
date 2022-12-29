@@ -135,12 +135,15 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+    <snackbar />
   </v-app>
 </template>
 
 <script>
+import Snackbar from '~/components/Snackbar.vue'
 export default {
   name: 'DefaultLayout',
+  components: { Snackbar },
   data() {
     return {
       items: [
