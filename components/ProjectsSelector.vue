@@ -6,19 +6,26 @@
     <v-col
       cols="12"
       sm="6"
-      class="pa-0 mt-1 d-flex projects_selector-select"
+      class="pa-0 mt-1 d-flex projects_selector-select d-flex align-center"
     >
       <v-select
         v-model="value"
         :items="projects"
         item-text="label"
-        item-id="id"
+        item-value="id"
         chips
         label="Select projects"
         multiple
         solo
+        flat
         outlined
+        hide-details
+        @change="change"
       />
+
+      <div class="projects_selector-counter ml-5 d-flex justify-center align-center">
+        <span>0</span>
+      </div>
     </v-col>
   </div>
 </template>
@@ -28,18 +35,21 @@ export default {
     projects: [{ id: 'id1', label: 'label 1' }, { id: 'id2', label: 'label 2' }]
   }),
   methods: {
-    test() {
-      alert(this.projects)
-    },
-    // async login() {
-    //   await this.$store.dispatch('user/login', this.form)
-    //   this.reset()
-    // }
+    change(e) {
+      const counter = document.querySelector('.projects_selector-counter')
+      counter.querySelector('span').innerText = this.value.length
+      if (this.value.length) {
+        counter.style.opacity = 1
+      } else {
+        counter.style.opacity = 0
+      }
+      this.$store.dispatch('projectsSelector/setProjects', this.value)
+      console.log(this.$store.getters['projectsSelector/getProjects'])
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-  @import '../assets/variables.scss';
 
   .projects_selector-title{
     font-size: 12px;
@@ -48,5 +58,23 @@ export default {
 
   .v-select-list::v-deep .v-list-item__content{
     flex: unset!important;
+  }
+
+  .projects_selector-counter{
+    width: 54px;
+    height: 54px;
+    border-radius: 54px;
+    background-color: $quinary-color;
+    opacity: 0;
+
+    &-visible{
+      opacity: 1;
+    }
+
+    span{
+      color: $secondary-color;
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 </style>
