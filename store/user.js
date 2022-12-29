@@ -23,14 +23,43 @@ export const mutations = {
 }
 
 export const actions = {
-  async login({ commit }, form) {
+  async login({ commit, dispatch }, form) {
     const response = await this.$apis.user.login(form)
     if (response.data.token) {
       localStorage.setItem('JWT', response.data.token)
       commit('setUser', response.data.user)
       commit('setToken', response.data.token)
+      this.$router.push('/')
+      await dispatch('snackbar/success', {
+        message: 'You are logged in!',
+        timer: 4000
+      }, { root: true })
       return true
     }
+    await dispatch('snackbar/error', {
+      message: 'Email or password incorrect!',
+      timer: 4000
+    }, { root: true })
+    return false
+  },
+
+  async signUp({ commit, dispatch }, form) {
+    const response = await this.$apis.user.signup(form)
+    if (response.data.token) {
+      localStorage.setItem('JWT', response.data.token)
+      commit('setUser', response.data.user)
+      commit('setToken', response.data.token)
+      this.$router.push('/')
+      await dispatch('snackbar/success', {
+        message: 'Your account has been created!',
+        timer: 4000
+      }, { root: true })
+      return true
+    }
+    await dispatch('snackbar/error', {
+      message: 'Error while creating the account',
+      timer: 4000
+    }, { root: true })
     return false
   },
 
