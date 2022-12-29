@@ -100,6 +100,8 @@
                       rows="4"
                       <<<<<<<
                       h-e-a-d
+                      <<<<<<<
+                      h-e-a-d
                     />
                     <div class="containe-selectedDate">
                       =======
@@ -134,6 +136,39 @@
                             @input="showDatePicker2 = false"
                           />
                         </div>
+                        =======
+                        />
+                        <div class="d-flex justify-space-between">
+                          <div class="selectedDate">
+                            <v-text-field
+                              v-model="selectedDate"
+                              label="Beginning of the task"
+                              placeholder="Cliquez pour sélectionner une date"
+                              @click="showDatePicker = true"
+                            />
+                            <v-date-picker
+                              v-if="showDatePicker"
+                              v-model="selectedDate"
+                              @input="showDatePicker = false"
+                            />
+                          </div>
+                          <div class="selectedDate">
+                            <v-text-field
+                              v-model="selectedDate2"
+                              label="End of the task"
+                              placeholder="Cliquez pour sélectionner une date"
+                              @click="showDatePicker2 = true"
+                            />
+                            <v-date-picker
+                              v-if="showDatePicker2"
+                              v-model="selectedDate2"
+                              type="date"
+                              time-picker
+                              @input="showDatePicker2 = false"
+                            />
+                            >>>>>>> 3c9c05a (feat: update config)
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </v-col>
@@ -165,6 +200,7 @@ export default {
         {
           id: 1,
           label: 'test01',
+          // eslint-disable-next-line vue/max-len
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec risus felis, mollis eu justo in, feugiat porta magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
           start: '2022-10-11 18:10:15',
           end: '2022-10-11 18:55:12',
@@ -174,6 +210,7 @@ export default {
         {
           id: 2,
           label: 'test02',
+          // eslint-disable-next-line vue/max-len
           description: 'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
           start: '2022-10-17 02:10:15',
           end: '2022-10-18 16:55:12',
@@ -183,6 +220,7 @@ export default {
         {
           id: 3,
           label: 'test03',
+          // eslint-disable-next-line vue/max-len
           description: 'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
           start: '2022-10-17 02:10:15',
           end: '2022-10-18 16:55:12',
