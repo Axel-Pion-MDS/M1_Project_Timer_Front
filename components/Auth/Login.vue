@@ -2,6 +2,7 @@
   <v-form
     ref="formulaire"
     v-model="valid"
+    class="my-8"
     lazy-validation
     @submit.prevent="login"
   >

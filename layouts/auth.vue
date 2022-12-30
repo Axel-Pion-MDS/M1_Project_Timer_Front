@@ -22,12 +22,15 @@
         <Nuxt />
       </v-container>
     </v-main>
+    <snackbar />
   </v-app>
 </template>
 
 <script>
+import Snackbar from '~/components/Snackbar.vue'
 export default {
   name: 'AuthLayout',
+  components: { Snackbar },
   data() {
     return {
       clipped: false,
