@@ -13,10 +13,10 @@
         <v-list-item-content>
           <div>
             <v-list-item-title class="text-h6">
-              {{ user.organization }}
+              {{ user.email }}
             </v-list-item-title>
             <v-list-item-subtitle>
-              {{ user.email }}
+              {{ user.organization }}
             </v-list-item-subtitle>
           </div>
         </v-list-item-content>
@@ -193,21 +193,19 @@ export default {
 
         }
       ],
-      user: {
-        firstName: 'Leo',
-        lastName: 'Cristal',
-        initials: 'LC',
-        organization: 'evian',
-        email: 'lcristal@evian.com'
-      }
+      user: {}
 
     }
   },
-  beforeMount() {
+  async beforeMount() {
     if (!this.$store.getters['user/userIsConnected']) {
       this.$router.push('/auth/login')
+    } else {
+      await this.$store.dispatch('user/getUserInfo')
+      this.user = this.$store.state.user.user
+      this.user.initials = (this.user.firstname).charAt(0) + (this.user.lastname).charAt(0)
     }
-  }
+  },
 }
 </script>
 

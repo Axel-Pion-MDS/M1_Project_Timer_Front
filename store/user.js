@@ -63,6 +63,11 @@ export const actions = {
     return false
   },
 
+  async getUserInfo({ commit, state }) {
+    const response = await this.$apis.user.get_user(state.token)
+    commit('setUser', response.data.data)
+  },
+
   getToken({ commit }) {
     if (localStorage.getItem('JWT')) {
       const token = localStorage.getItem('JWT')
