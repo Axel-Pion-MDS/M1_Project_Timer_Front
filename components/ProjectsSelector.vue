@@ -32,8 +32,17 @@
 <script>
 export default {
   data: () => ({
-    projects: [{ id: 'id1', label: 'label 1' }, { id: 'id2', label: 'label 2' }]
+    projects: []
   }),
+  mounted() {
+    // this.projects = this.$store.getters['projectsSelector/getProjects']
+
+  },
+  async beforeMount() {
+    await this.$store.dispatch('projectsSelector/getProjects')
+    this.projects = this.$store.getters['projectsSelector/getProjects']
+    console.log(this.$store.getters['projectsSelector/getProjects'])
+  },
   methods: {
     change(e) {
       const counter = document.querySelector('.projects_selector-counter')
@@ -43,8 +52,9 @@ export default {
       } else {
         counter.style.opacity = 0
       }
-      this.$store.dispatch('projectsSelector/setProjects', this.value)
-      console.log(this.$store.getters['projectsSelector/getProjects'])
+      this.$store.dispatch('projectsSelector/setSelectedProjects', this.value)
+      console.log(this.$store.getters['projectsSelector/getSelectedProjects'])
+      console.log(this.$store.dispatch('projectsSelector/getSelectedProjects'))
     }
   }
 }
