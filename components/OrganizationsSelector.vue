@@ -1,20 +1,20 @@
-<template class="projects_selector">
+<template class="organizations_selector">
   <div>
-    <span class="projects_selector-title">
-      Projects
+    <span class="organizations_selector-title">
+      Organizations
     </span>
     <v-col
       cols="12"
       sm="6"
-      class="pa-0 mt-1 d-flex projects_selector-select d-flex align-center"
+      class="pa-0 mt-1 d-flex organizations_selector-select d-flex align-center"
     >
       <v-select
         v-model="value"
-        :items="projects"
+        :items="organizations"
         item-text="label"
         item-value="id"
         chips
-        label="Select projects"
+        label="Select organizations"
         multiple
         solo
         flat
@@ -23,7 +23,7 @@
         @change="change"
       />
 
-      <div class="projects_selector-counter ml-5 d-flex justify-center align-center">
+      <div class="organizations_selector-counter ml-5 d-flex justify-center align-center">
         <span>0</span>
       </div>
     </v-col>
@@ -32,31 +32,31 @@
 <script>
 export default {
   data: () => ({
-    projects: []
+    organizations: []
   }),
   async beforeMount() {
-    await this.$store.dispatch('projectsSelector/getProjects')
-    this.projects = this.$store.getters['projectsSelector/getProjects']
+    await this.$store.dispatch('organizationsSelector/getOrganizations')
+    this.organizations = this.$store.getters['organizationsSelector/getOrganizations']
   },
   methods: {
     change(e) {
-      const counter = document.querySelector('.projects_selector-counter')
+      const counter = document.querySelector('.organizations_selector-counter')
       counter.querySelector('span').innerText = this.value.length
       if (this.value.length) {
         counter.style.opacity = 1
       } else {
         counter.style.opacity = 0
       }
-      this.$store.dispatch('projectsSelector/setSelectedProjects', this.value)
-      console.log(this.$store.getters['projectsSelector/getSelectedProjects'])
-      console.log(this.$store.dispatch('projectsSelector/getSelectedProjects'))
+      this.$store.dispatch('organizationsSelector/setSelectedOrganizations', this.value)
+      console.log(this.$store.getters['organizationsSelector/getSelectedOrganizations'])
+      console.log(this.$store.dispatch('organizationsSelector/getSelectedOrganizations'))
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 
-  .projects_selector-title{
+  .organizations_selector-title{
     font-size: 12px;
     color: $tertiary-color;
   }
@@ -65,7 +65,7 @@ export default {
     flex: unset!important;
   }
 
-  .projects_selector-counter{
+  .organizations_selector-counter{
     width: 54px;
     min-width: 54px;
     height: 54px;

@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h1>Teams</h1>
-    <ProjectsSelector />
+    <OrganizationsSelector />
   </div>
 </template>
 <script>
