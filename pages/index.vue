@@ -232,10 +232,10 @@ export default {
       return this.tasks
     },
   },
-  async beforeMount() {
-    await this.$store.dispatch('task/setTasks')
-    this.tasks = this.$store.getters['projectsSelector/getProjects']
-    console.log(this.$store.getters['projectsSelector/getProjects'])
+  async mounted() {
+    await this.$store.dispatch('task/getTasks')
+    const tasks = this.$store.state.tasks
+    console.log(tasks)
   },
   methods: {
     deleteItem() {
