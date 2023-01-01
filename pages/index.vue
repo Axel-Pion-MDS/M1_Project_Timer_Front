@@ -150,6 +150,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'IndexPage',
   data() {
@@ -226,18 +227,22 @@ export default {
   computed: {
     filteredCards() {
       if (this.selected) {
-        console.log('ici')
         return this.tasks.filter(task => task.projectLabel === this.selected)
       }
       return this.tasks
     },
+  },
+  async beforeMount() {
+    await this.$store.dispatch('task/setTasks')
+    this.tasks = this.$store.getters['projectsSelector/getProjects']
+    console.log(this.$store.getters['projectsSelector/getProjects'])
   },
   methods: {
     deleteItem() {
 
     },
     submitForm() {
-      console.log(this.form)
+      console.log('submitForm')
     }
   }
 }
