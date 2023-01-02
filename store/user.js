@@ -30,10 +30,6 @@ export const actions = {
       commit('setUser', response.data.user)
       commit('setToken', response.data.token)
       this.$router.push('/')
-      await dispatch('snackbar/success', {
-        message: 'You are logged in!',
-        timer: 4000
-      }, { root: true })
       return true
     }
     await dispatch('snackbar/error', {
@@ -61,6 +57,17 @@ export const actions = {
       timer: 4000
     }, { root: true })
     return false
+  },
+
+  async logOut({ commit, dispatch }) {
+    localStorage.removeItem('JWT')
+    await dispatch('snackbar/success', {
+      message: 'Your disconnected!',
+      timer: 4000
+    }, { root: true })
+    this.$router.replace({ path: '/auth/login' })
+    commit('setToken', {})
+    return true
   },
 
   async getUserInfo({ commit, state }) {
