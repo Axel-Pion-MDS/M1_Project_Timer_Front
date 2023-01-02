@@ -70,8 +70,13 @@ export default {
       this.$refs.formulaire.resetValidation()
     },
     async login() {
-      await this.$store.dispatch('user/login', this.form)
-      this.reset()
+      if (await this.$store.dispatch('user/login', this.form)) {
+        await this.$store.dispatch('snackbar/success', {
+          message: 'You are logged in!',
+          timer: 4000
+        }, { root: true })
+        this.reset()
+      }
     }
   }
 }
