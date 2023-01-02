@@ -31,17 +31,17 @@ module.exports = {
         ignores: ['pre', 'textarea'],
       },
     ],
-    'vue/max-len': [
-      'error',
-      {
-        // code: 120,
-        // template: 120,
-        tabWidth: 2,
-        ignoreComments: false,
-        ignoreUrls: false,
-        ignoreStrings: false,
-      },
-    ],
+    // 'vue/max-len': [
+    //   'error',
+    //   {
+    //     code: 120,
+    //     template: 120,
+    //     tabWidth: 2,
+    //     ignoreComments: false,
+    //     ignoreUrls: false,
+    //     ignoreStrings: false,
+    //   },
+    // ],
     'comma-dangle': ['error', 'only-multiline'],
     'no-multiple-empty-lines': 'warn',
     'space-before-function-paren': 'off',
