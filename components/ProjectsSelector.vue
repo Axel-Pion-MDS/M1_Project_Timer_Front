@@ -48,8 +48,6 @@ export default {
         counter.style.opacity = 0
       }
       this.$store.dispatch('projectsSelector/setSelectedProjects', this.value)
-      console.log(this.$store.getters['projectsSelector/getSelectedProjects'])
-      console.log(this.$store.dispatch('projectsSelector/getSelectedProjects'))
     }
   }
 }

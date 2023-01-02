@@ -38,7 +38,8 @@ export default {
     }
   },
   data: () => ({
-    organizations: []
+    organizations: [],
+    value: ''
   }),
   async beforeMount() {
     await this.$store.dispatch('organizationsSelector/getOrganizations')
