@@ -30,15 +30,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-<<<<<<< HEAD
     { src: '~/plugins/axios.js' },
     { src: '~/plugins/apis.js' },
     { src: '~/plugins/client-only.js', mode: 'client' },
-=======
-    {src: '~/plugins/axios.js'},
-    {src: '~/plugins/apis.js'},
-    {src: '~/plugins/client-only.js', mode: 'client'},
->>>>>>> da589a0 (feat: task-timer store)
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -59,7 +53,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://timer.sylvaindendele.com'
+    proxy: false,
+    baseURL: 'http://localhost:8000',
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
