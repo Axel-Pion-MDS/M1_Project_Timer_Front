@@ -9,9 +9,12 @@
 export default {
   name: 'TeamsPage',
   layout: 'default',
+  async beforeMount () {
+    await this.$store.dispatch('organizationsSelector/teams')
+  },
   methods: {
-    test() {
-      console.log('ici')
+    async test() {
+      await this.$store.dispatch('organizationsSelector/teams')
     }
   }
 }
