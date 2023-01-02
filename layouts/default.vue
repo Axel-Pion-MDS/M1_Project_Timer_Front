@@ -108,6 +108,25 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-list
+        dense
+        nav
+        class="mt-8 logout"
+      >
+        <v-list-item @click="logout">
+          <v-list-item-icon>
+            <v-icon color="red">
+              mdi-logout
+            </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>
+              Logout
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
     <v-main>
@@ -132,9 +151,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
     <snackbar />
   </v-app>
 </template>
@@ -206,6 +222,11 @@ export default {
       this.user.initials = (this.user.firstname).charAt(0) + (this.user.lastname).charAt(0)
     }
   },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('user/logOut')
+    }
+  }
 }
 </script>
 
@@ -229,5 +250,9 @@ export default {
   font-weight: 600;
   font-size: 12px;
   line-height: 24px;
+}
+.logout {
+  position: absolute;
+  bottom: 0;
 }
 </style>
