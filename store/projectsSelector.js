@@ -24,7 +24,6 @@ export const mutations = {
 export const actions = {
   async getProjects({ commit }) {
     const response = await this.$apis.project.projects()
-    console.log(response.data.data)
     // console.log(response)
     commit('setProjects', response.data.data)
     return response

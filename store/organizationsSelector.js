@@ -51,5 +51,17 @@ export const actions = {
     }
 
     commit('setTeams', teams)
+  },
+  async deleteTeam({ commit, state, dispatch }, id) {
+    const request = await this.$apis.team.deleteTeam(id)
+    if (request.status === 200) {
+      // eslint-disable-next-line no-undef
+      await dispatch('snackbar/success', {
+        message: 'This team has been deleted',
+        timer: 4000
+      }, { root: true })
+      // eslint-disable-next-line no-undef
+      dispatch('teams')
+    }
   }
 }

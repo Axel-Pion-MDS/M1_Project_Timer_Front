@@ -4,6 +4,7 @@
       v-for="team in teams"
       :key="team.id"
       :data-organization="team.organization.id"
+      :data-team="team.id"
       elevation="2"
       class="teams_cards_item"
       width="calc(50% - 18px)"
@@ -26,6 +27,7 @@
 
           <v-btn
             text
+            @click="deleteTeam(team.id)"
           >
             Delete
           </v-btn>
@@ -44,6 +46,9 @@ export default {
     }
   },
   methods: {
+    async deleteTeam(id) {
+      await this.$store.dispatch('organizationsSelector/deleteTeam', id)
+    }
   },
 }
 </script>
