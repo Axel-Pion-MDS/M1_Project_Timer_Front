@@ -31,6 +31,12 @@
 </template>
 <script>
 export default {
+  props: {
+    // eslint-disable-next-line vue/require-default-prop
+    callback: {
+      type: Function
+    }
+  },
   data: () => ({
     organizations: []
   }),
@@ -48,8 +54,9 @@ export default {
         counter.style.opacity = 0
       }
       this.$store.dispatch('organizationsSelector/setSelectedOrganizations', this.value)
-      console.log(this.$store.getters['organizationsSelector/getSelectedOrganizations'])
-      console.log(this.$store.dispatch('organizationsSelector/getSelectedOrganizations'))
+      if (this.callback) {
+        this.callback()
+      }
     }
   }
 }
