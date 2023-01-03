@@ -55,7 +55,7 @@ export const actions = {
   },
   async deleteProject({ commit, state, dispatch }, id) {
     const request = await this.$apis.project.deleteProject(id)
-    if (request.status === 200) {
+    if (request.data.code === 200 || request.data.code === 201) {
       // eslint-disable-next-line no-undef
       await dispatch('snackbar/success', {
         message: 'This project has been deleted',
@@ -65,14 +65,14 @@ export const actions = {
       dispatch('projects')
     } else {
       await dispatch('snackbar/error', {
-        message: request.message,
+        message: request.data.message,
         timer: 4000
       }, { root: true })
     }
   },
   async newProject({ commit, state, dispatch }, form) {
     const request = await this.$apis.project.addProject(form)
-    if (request.status === 200) {
+    if (request.data.code === 200 || request.data.code === 201) {
       // eslint-disable-next-line no-undef
       await dispatch('snackbar/success', {
         message: 'This project has been created',
@@ -82,7 +82,7 @@ export const actions = {
       dispatch('projects')
     } else {
       await dispatch('snackbar/error', {
-        message: request.message,
+        message: request.data.message,
         timer: 4000
       }, { root: true })
     }
@@ -91,7 +91,7 @@ export const actions = {
   async updateProject({ commit, state, dispatch }, form) {
     const request = await this.$apis.project.updateProject(form)
     console.log(request)
-    if (request.status === 200) {
+    if (request.data.code === 200 || request.data.code === 201) {
       // eslint-disable-next-line no-undef
       await dispatch('snackbar/success', {
         message: 'This project has been updated',
@@ -101,7 +101,7 @@ export const actions = {
       dispatch('projects')
     } else {
       await dispatch('snackbar/error', {
-        message: request.message,
+        message: request.data.message,
         timer: 4000
       }, { root: true })
     }

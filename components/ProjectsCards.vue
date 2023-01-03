@@ -171,7 +171,6 @@ export default {
       this.name = project.label
       this.description = project.description
       this.team = project.team
-      this.organizationId = this.organization
       this.projectId = project.id
       this.showForm = true
       this.create = false
@@ -189,7 +188,7 @@ export default {
         label: this.name,
         description: this.description,
         team: this.team,
-        organization: this.organizationId
+        organization: this.organization
       }
       if (this.create) {
         const request = await this.$store.dispatch('teamsSelector/newProject', form)
