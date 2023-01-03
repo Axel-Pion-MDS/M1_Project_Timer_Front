@@ -146,6 +146,17 @@
         </div>
       </v-card>
     </div>
+    <v-btn
+      class="mx-2"
+      fab
+      dark
+      color="indigo"
+      style="bottom: 15px;right: 0;position: absolute;"
+    >
+      <v-icon dark>
+        mdi-plus
+      </v-icon>
+    </v-btn>
   </div>
 </template>
 
@@ -224,11 +235,14 @@ export default {
     console.log(this.tasks)
   },
   methods: {
-    deleteItem() {
-
+    async deleteItem(taskId) {
+      await this.$store.dispatch('task/deleteTask', taskId)
+      this.tasks = this.$store.state.task.tasks
     },
     async submitUpdateForm() {
-      await this.$store.dispatch('task/updateTask', this.form)
+      const task = { ...this.form}
+      task.project = this.form.project.id
+      await this.$store.dispatch('task/updateTask', task)
     },
     async showTask(taskId) {
       await this.$store.dispatch('task/getTask', taskId)

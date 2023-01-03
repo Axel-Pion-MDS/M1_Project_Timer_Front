@@ -65,7 +65,7 @@ export const actions = {
   // This action update an existing task
   async updateTask ({ commit }, task) {
     try {
-      const { data } = await this.$axios.put('/tasks/update', task)
+      const { data } = await this.$axios.put('/task/update', task)
       commit('UPDATE_TASK', data.data)
     } catch (error) {
       console.err(error)
@@ -75,7 +75,7 @@ export const actions = {
   // This action delete an existing task
   async deleteTask ({ commit }, taskId) {
     try {
-      await this.$axios.delete(`/tasks/delete/${taskId}`)
+      await this.$axios.delete(`/task/delete/${taskId}`)
       commit('DELETE_TASK', taskId)
     } catch (error) {
       console.err(error)
