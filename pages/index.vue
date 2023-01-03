@@ -98,77 +98,35 @@
                       color="deep-purple"
                       label="Description"
                       rows="4"
-                      <<<<<<<
-                      h-e-a-d
-                      <<<<<<<
-                      h-e-a-d
                     />
-                    <div class="containe-selectedDate">
-                      =======
-                      ></v-textarea>
-                      <div class="d-flex justify-space-between">
-                        >>>>>>> 805177c (feat:merge modif return)
-                        <div class="selectedDate">
-                          <v-text-field
-                            v-model="selectedDate"
-                            label="Beginning of the task"
-                            placeholder="Cliquez pour sélectionner une date"
-                            @click="showDatePicker = true"
-                          />
-                          <v-date-picker
-                            v-if="showDatePicker"
-                            v-model="selectedDate"
-                            @input="showDatePicker = false"
-                          />
-                        </div>
-                        <div class="selectedDate">
-                          <v-text-field
-                            v-model="selectedDate2"
-                            label="End of the task"
-                            placeholder="Cliquez pour sélectionner une date"
-                            @click="showDatePicker2 = true"
-                          />
-                          <v-date-picker
-                            v-if="showDatePicker2"
-                            v-model="selectedDate2"
-                            type="date"
-                            time-picker
-                            @input="showDatePicker2 = false"
-                          />
-                        </div>
-                        =======
+                    <div class="d-flex justify-space-between">
+                      <div class="selectedDate">
+                        <v-text-field
+                          v-model="selectedDate"
+                          label="Beginning of the task"
+                          placeholder="Cliquez pour sélectionner une date"
+                          @click="showDatePicker = true"
                         />
-                        <div class="d-flex justify-space-between">
-                          <div class="selectedDate">
-                            <v-text-field
-                              v-model="selectedDate"
-                              label="Beginning of the task"
-                              placeholder="Cliquez pour sélectionner une date"
-                              @click="showDatePicker = true"
-                            />
-                            <v-date-picker
-                              v-if="showDatePicker"
-                              v-model="selectedDate"
-                              @input="showDatePicker = false"
-                            />
-                          </div>
-                          <div class="selectedDate">
-                            <v-text-field
-                              v-model="selectedDate2"
-                              label="End of the task"
-                              placeholder="Cliquez pour sélectionner une date"
-                              @click="showDatePicker2 = true"
-                            />
-                            <v-date-picker
-                              v-if="showDatePicker2"
-                              v-model="selectedDate2"
-                              type="date"
-                              time-picker
-                              @input="showDatePicker2 = false"
-                            />
-                            >>>>>>> 3c9c05a (feat: update config)
-                          </div>
-                        </div>
+                        <v-date-picker
+                          v-if="showDatePicker"
+                          v-model="selectedDate"
+                          @input="showDatePicker = false"
+                        />
+                      </div>
+                      <div class="selectedDate">
+                        <v-text-field
+                          v-model="selectedDate2"
+                          label="End of the task"
+                          placeholder="Cliquez pour sélectionner une date"
+                          @click="showDatePicker2 = true"
+                        />
+                        <v-date-picker
+                          v-if="showDatePicker2"
+                          v-model="selectedDate2"
+                          type="date"
+                          time-picker
+                          @input="showDatePicker2 = false"
+                        />
                       </div>
                     </div>
                   </v-col>
