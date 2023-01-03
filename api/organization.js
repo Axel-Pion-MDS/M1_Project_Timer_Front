@@ -20,6 +20,12 @@ export default axios => ({
       organization: organizationId
     }
     return axios.post('/user-organization/add', data)
+  },
+  update_organization(form) {
+    return axios.patch('/organization/update', form)
+  },
+  add_organization(form) {
+    return axios.post('/organization/add', form)
   }
 
 })
