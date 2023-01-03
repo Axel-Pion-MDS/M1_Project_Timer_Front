@@ -97,6 +97,7 @@
         <v-list-item
           v-for="workspace in workspaces"
           :key="workspace.title"
+          :to="workspace.to"
           link
         >
           <v-list-item-icon>

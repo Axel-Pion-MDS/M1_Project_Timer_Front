@@ -33,6 +33,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/axios.js' },
     { src: '~/plugins/apis.js' },
     { src: '~/plugins/client-only.js', mode: 'client' },
   ],
@@ -55,7 +56,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:8000'
+    baseURL: 'https://timer.sylvaindendele.com'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
