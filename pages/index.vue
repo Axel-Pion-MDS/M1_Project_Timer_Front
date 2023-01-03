@@ -33,21 +33,21 @@
         <v-card-text>{{ task.description }}</v-card-text>
         <div>
           <div class="pl-4">
-            <span>{{ task.start }}</span>
+            <span>{{ task.provisional_start }}</span>
             <span class="arrow_right" />
-            <span>{{ task.end }}</span>
+            <span>{{ task.provisional_end }}</span>
           </div>
           <v-card-actions>
             <v-btn color="error" @click="deleteItem(task.id)">
               Supprimer
             </v-btn>
 
-            <v-btn @click="showModal = true">
+            <v-btn @click="showModal = true; showTask(task.id) ">
               Edit
             </v-btn>
             <v-dialog v-model="showModal" max-width="650">
               <v-card>
-                <form @submit.prevent="submitForm">
+                <form @submit.prevent="submitUpdateForm">
                   <div class="d-flex justify-center">
                     <v-col cols="5">
                       <v-autocomplete
@@ -84,7 +84,7 @@
                     class="wap-form"
                   >
                     <v-textarea
-                      v-model="form.title"
+                      v-model="form.label"
                       auto-grow
                       filled
                       color="deep-purple"
@@ -155,39 +155,19 @@ export default {
   name: 'IndexPage',
   data() {
     return {
-      tasks: [
-        {
-          id: 1,
-          label: 'test01',
-          // eslint-disable-next-line vue/max-len
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec risus felis, mollis eu justo in, feugiat porta magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
-          start: '2022-10-11 18:10:15',
-          end: '2022-10-11 18:55:12',
-          projectLabel: 'projects01',
-          projectDescription: 'Lorem ipsum dolor sit amet',
-        },
-        {
-          id: 2,
-          label: 'test02',
-          // eslint-disable-next-line vue/max-len
-          description: 'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
-          start: '2022-10-17 02:10:15',
-          end: '2022-10-18 16:55:12',
-          projectLabel: 'projects02',
-          projectDescription: 'Lorem ipsum dolor sit amet',
-        },
-        {
-          id: 3,
-          label: 'test03',
-          // eslint-disable-next-line vue/max-len
-          description: 'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
-          start: '2022-10-17 02:10:15',
-          end: '2022-10-18 16:55:12',
-          projectLabel: 'projects01',
-          projectDescription: 'Lorem ipsum dolor sit amet',
-        },
-
-      ],
+      tasks: [],
+      task: {
+        created_at: null,
+        description: null,
+        id: null,
+        is_billable: true,
+        is_ended: false,
+        label: null,
+        provisional_end: null,
+        provisional_start: null,
+        provisional_time: null,
+        updated_at: null,
+      },
       selected: null,
       showModal: false,
       valuesUser: [],
@@ -202,10 +182,12 @@ export default {
       }],
       projects: [
         {
+          id: 1,
           label: 'projects01',
           nb_projects: 2,
         },
         {
+          id: 2,
           label: 'projects02',
           nb_projects: 1,
         },
@@ -215,34 +197,42 @@ export default {
       selectedDate2: null,
       showDatePicker2: false,
       form: {
+        created_at: null,
         description: null,
-        title: null,
-        assignMenber: null,
-        startAt: null,
-        endAt: null,
-        assignProject: null
-      }
+        id: null,
+        is_billable: true,
+        is_ended: false,
+        label: null,
+        provisional_end: null,
+        provisional_start: null,
+        provisional_time: null,
+        updated_at: null,
+      },
     }
   },
   computed: {
     filteredCards() {
       if (this.selected) {
-        return this.tasks.filter(task => task.projectLabel === this.selected)
+        return this.tasks.filter(task => task.project.label === this.selected)
       }
       return this.tasks
     },
   },
   async mounted() {
-    await this.$store.dispatch('task/getTasks')
-    const tasks = this.$store.state.tasks
-    console.log(tasks)
+    await this.$store.dispatch('task/getTasks', 1)
+    this.tasks = this.$store.state.task.tasks
+    console.log(this.tasks)
   },
   methods: {
     deleteItem() {
 
     },
-    submitForm() {
-      console.log('submitForm')
+    async submitUpdateForm() {
+      await this.$store.dispatch('task/updateTask', this.form)
+    },
+    async showTask(taskId) {
+      await this.$store.dispatch('task/getTask', taskId)
+      this.form = { ...this.$store.state.task.task }
     }
   }
 }

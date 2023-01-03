@@ -36,7 +36,7 @@ export const actions = {
   async getTasks ({ commit }, projectId) {
     try {
       const { data } = await this.$axios.get(`/task/project/${projectId}`)
-      commit('SET_TASKS', data)
+      commit('SET_TASKS', data.data)
     } catch (error) {
       console.err(error)
       throw error
@@ -46,7 +46,7 @@ export const actions = {
   async getTask ({ commit }, taskId) {
     try {
       const { data } = await this.$axios.get(`/task/${taskId}`)
-      commit('SET_TASK', data)
+      commit('SET_TASK', data.data)
     } catch (error) {
       console.err(error)
       throw error
@@ -56,7 +56,7 @@ export const actions = {
   async addTask ({ commit }, task) {
     try {
       const { data } = await this.$axios.post('/task/add', task)
-      commit('ADD_TASK', data)
+      commit('ADD_TASK', data.data)
     } catch (error) {
       console.err(error)
       throw error
@@ -66,7 +66,7 @@ export const actions = {
   async updateTask ({ commit }, task) {
     try {
       const { data } = await this.$axios.put('/tasks/update', task)
-      commit('UPDATE_TASK', data)
+      commit('UPDATE_TASK', data.data)
     } catch (error) {
       console.err(error)
       throw error
