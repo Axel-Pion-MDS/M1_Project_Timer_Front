@@ -56,7 +56,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://timer.sylvaindendele.com/api/'
+    baseURL: 'https://timer.sylvaindendele.com'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
