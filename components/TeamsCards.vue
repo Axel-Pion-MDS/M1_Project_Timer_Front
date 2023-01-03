@@ -139,8 +139,13 @@ export default {
     this.organizations = this.$store.getters['organizationsSelector/getOrganizations']
   },
   methods: {
-    async deleteTeam(id) {
-      await this.$store.dispatch('organizationsSelector/deleteTeam', id)
+    async deleteTeam(id) {      
+      if (await this.$store.dispatch('organizationsSelector/deleteTeam', id) ) {
+        await this.$store.dispatch('snackbar/success', {
+          message: 'This team has been deleted',
+          timer: 4000
+        }, { root: true })
+      }
     },
     updateTeam(team) {
       this.name = team.label
