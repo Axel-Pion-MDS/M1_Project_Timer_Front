@@ -149,13 +149,14 @@ export default {
   computed: {
     projects () {
       return this.$store.state.teamsSelector.projects
+    },
+    organizations () {
+      return this.$store.state.user.user.organizations
     }
   },
   async beforeMount () {
     await this.$store.dispatch('teamsSelector/getTeams')
     this.teams = this.$store.getters['teamsSelector/getTeams']
-    await this.$store.dispatch('organizationsSelector/getOrganizations')
-    this.organizations = this.$store.getters['organizationsSelector/getOrganizations']
   },
   methods: {
     async deleteProject(id) {
@@ -170,7 +171,7 @@ export default {
       this.name = project.label
       this.description = project.description
       this.team = project.team
-      this.organization = project.organization
+      this.organizationId = this.organization
       this.projectId = project.id
       this.showForm = true
       this.create = false
@@ -188,7 +189,7 @@ export default {
         label: this.name,
         description: this.description,
         team: this.team,
-        organization: this.organization
+        organization: this.organizationId
       }
       if (this.create) {
         const request = await this.$store.dispatch('teamsSelector/newProject', form)
@@ -197,7 +198,7 @@ export default {
           this.name = ''
           this.description = ''
           this.team = 0
-          this.organization = 0
+          this.organizationId = 0
         }
       } else {
         const request = await this.$store.dispatch('teamsSelector/updateProject', form)
@@ -206,7 +207,7 @@ export default {
           this.name = ''
           this.description = ''
           this.team = 0
-          this.organization = 0
+          this.organizationId = 0
         }
       }
     }
