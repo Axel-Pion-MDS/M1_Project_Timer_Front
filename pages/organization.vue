@@ -45,7 +45,7 @@
                     >
                       <h4>Add new user</h4>
                       <v-text-field
-                        v-model="email"
+                        v-model="form_user.email"
                         :rules="[rules.required(), rules.isEmail()]"
                         label="Email"
                         validate-on-blur
@@ -54,7 +54,20 @@
                         class="mt-8"
                       />
                     </v-col>
-
+                    <v-col cols="12">
+                      <v-select
+                        v-model="form_user.role"
+                        :items="roles"
+                        item-text="label"
+                        item-value="id"
+                        chips
+                        label="Select organizations"
+                        solo
+                        flat
+                        outlined
+                        hide-details
+                      />
+                    </v-col>
                     <v-card-actions>
                       <v-btn color="primary" type="submit">
                         Submit
@@ -145,12 +158,18 @@ export default {
         label: '',
         password: ''
       },
-      email: ''
+      form_user: {
+        email: '',
+        role: ''
+      }
     }
   },
   computed: {
     organization() {
       return this.$store.state.organization.organization
+    },
+    roles() {
+      return this.$store.getters['role/getOrganizationRoles']
     }
   },
   async beforeMount() {
@@ -186,18 +205,9 @@ export default {
     },
     addUser() {
       if (this.$store.state.organization.user_organization_role.label !== 'ROLE_ORGANIZATION_MEMBER') {
-        this.$store.dispatch('organization/addUserOrganization', this.email)
+        this.$store.dispatch('organization/addUserOrganization', this.form_user)
       }
     },
-    async login() {
-      if (await this.$store.dispatch('user/login', this.form)) {
-        await this.$store.dispatch('snackbar/success', {
-          message: 'You are logged in!',
-          timer: 4000
-        }, { root: true })
-        this.reset()
-      }
-    }
   },
 }
 

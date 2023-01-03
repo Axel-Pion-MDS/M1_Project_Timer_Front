@@ -40,9 +40,8 @@ export const actions = {
     })
   },
 
-  addUserOrganization({ commit }, form) {
-    console.log(form)
-    // const response = await this.$apis.organization.get_organization(form.id)
-    return true
+  async addUserOrganization({ commit, state }, form) {
+    const response = await this.$apis.organization.add_user_organization(form, state.organization.id)
+    return response
   }
 }
