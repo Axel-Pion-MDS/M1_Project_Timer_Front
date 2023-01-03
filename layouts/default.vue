@@ -15,8 +15,18 @@
             <v-list-item-title class="text-h6">
               {{ user.email }}
             </v-list-item-title>
-            <v-list-item-subtitle>
-              {{ user.organization }}
+            <div v-if="user_organization_length >= 1">
+              <v-list-item-subtitle v-if="user_organization_length >= 2">
+                toto
+              </v-list-item-subtitle>
+              <v-list-item-subtitle v-else>
+                <nuxt-link to="/organization">
+                  Create one!
+                </nuxt-link>
+              </v-list-item-subtitle>
+            </div>
+            <v-list-item-subtitle v-else>
+              Créer une organization
             </v-list-item-subtitle>
           </div>
         </v-list-item-content>
@@ -210,7 +220,8 @@ export default {
 
         }
       ],
-      user: {}
+      user: {},
+      user_organization_length: []
 
     }
   },
@@ -221,6 +232,11 @@ export default {
       await this.$store.dispatch('user/getUserInfo')
       this.user = this.$store.state.user.user
       this.user.initials = (this.user.firstname).charAt(0) + (this.user.lastname).charAt(0)
+
+      this.user_organization_length = this.user.organizations === 'null' ? [].length : this.user.organizations.length
+      if (this.user_organization_length === 1) {
+        this.$store.dispatch('organization/setOrganization', this.user.organizations[0])
+      }
     }
   },
   methods: {
