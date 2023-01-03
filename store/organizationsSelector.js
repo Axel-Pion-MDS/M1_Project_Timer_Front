@@ -54,7 +54,7 @@ export const actions = {
   },
   async deleteTeam({ commit, state, dispatch }, id) {
     const request = await this.$apis.team.deleteTeam(id)
-    if (request.status === 200) {
+    if (request.data.code === 200) {
       // eslint-disable-next-line no-undef
       await dispatch('snackbar/success', {
         message: 'This team has been deleted',
@@ -64,14 +64,14 @@ export const actions = {
       dispatch('teams')
     } else {
       await dispatch('snackbar/error', {
-        message: request.message,
+        message: request.data.message,
         timer: 4000
       }, { root: true })
     }
   },
   async newTeam({ commit, state, dispatch }, form) {
     const request = await this.$apis.team.addTeam(form)
-    if (request.status === 200) {
+    if (request.data.code === 200) {
       // eslint-disable-next-line no-undef
       await dispatch('snackbar/success', {
         message: 'This team has been created',
@@ -81,7 +81,7 @@ export const actions = {
       dispatch('teams')
     } else {
       await dispatch('snackbar/error', {
-        message: request.message,
+        message: request.data.message,
         timer: 4000
       }, { root: true })
     }
@@ -90,7 +90,7 @@ export const actions = {
   async updateTeam({ commit, state, dispatch }, form) {
     const request = await this.$apis.team.updateTeam(form)
     console.log(request)
-    if (request.status === 200) {
+    if (request.data.code === 200) {
       // eslint-disable-next-line no-undef
       await dispatch('snackbar/success', {
         message: 'This team has been updated',
@@ -100,7 +100,7 @@ export const actions = {
       dispatch('teams')
     } else {
       await dispatch('snackbar/error', {
-        message: request.message,
+        message: request.data.message,
         timer: 4000
       }, { root: true })
     }
