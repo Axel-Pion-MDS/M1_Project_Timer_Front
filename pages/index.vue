@@ -157,6 +157,7 @@
         mdi-plus
       </v-icon>
     </v-btn>
+    <TaskForm></TaskForm>
   </div>
 </template>
 
@@ -240,7 +241,7 @@ export default {
       this.tasks = this.$store.state.task.tasks
     },
     async submitUpdateForm() {
-      const task = { ...this.form}
+      const task = { ...this.form }
       task.project = this.form.project.id
       await this.$store.dispatch('task/updateTask', task)
     },
