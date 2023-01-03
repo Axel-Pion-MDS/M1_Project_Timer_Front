@@ -37,6 +37,7 @@
             <span class="arrow_right" />
             <span>{{ task.provisional_end }}</span>
           </div>
+          <TaskTimer :task="task" />
           <v-card-actions>
             <v-btn color="error" @click="deleteItem(task.id)">
               Supprimer
@@ -102,14 +103,12 @@
                     <div class="d-flex justify-space-between">
                       <div class="selectedDate">
                         <v-text-field
-                          v-model="selectedDate"
                           label="Beginning of the task"
                           placeholder="Cliquez pour sélectionner une date"
                           @click="showDatePicker = true"
                         />
                         <v-date-picker
                           v-if="showDatePicker"
-                          v-model="selectedDate"
                           @input="showDatePicker = false"
                         />
                       </div>
@@ -152,34 +151,22 @@
       dark
       color="indigo"
       style="bottom: 15px;right: 0;position: absolute;"
+      @click="showTask(),showModal = true;"
     >
       <v-icon dark>
         mdi-plus
       </v-icon>
     </v-btn>
-    <TaskForm></TaskForm>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'IndexPage',
   data() {
     return {
       tasks: [],
-      task: {
-        created_at: null,
-        description: null,
-        id: null,
-        is_billable: true,
-        is_ended: false,
-        label: null,
-        provisional_end: null,
-        provisional_start: null,
-        provisional_time: null,
-        updated_at: null,
-      },
+      taskTimers: [],
       selected: null,
       showModal: false,
       valuesUser: [],
@@ -209,16 +196,14 @@ export default {
       selectedDate2: null,
       showDatePicker2: false,
       form: {
-        created_at: null,
-        description: null,
-        id: null,
-        is_billable: true,
-        is_ended: false,
         label: null,
-        provisional_end: null,
+        description: null,
         provisional_start: null,
+        provisional_end: null,
         provisional_time: null,
-        updated_at: null,
+        is_billable: null,
+        is_ended: null,
+        project: null,
       },
     }
   },
@@ -230,10 +215,9 @@ export default {
       return this.tasks
     },
   },
-  async mounted() {
-    await this.$store.dispatch('task/getTasks', 1)
+  mounted() {
+    this.$store.dispatch('task/getTasks', 1)
     this.tasks = this.$store.state.task.tasks
-    console.log(this.tasks)
   },
   methods: {
     async deleteItem(taskId) {
@@ -241,14 +225,38 @@ export default {
       this.tasks = this.$store.state.task.tasks
     },
     async submitUpdateForm() {
-      const task = { ...this.form }
-      task.project = this.form.project.id
-      await this.$store.dispatch('task/updateTask', task)
+      if (this.form.id) {
+        const task = { ...this.form }
+        task.project = this.form.project.id
+        await this.$store.dispatch('task/updateTask', task)
+        this.showModal = false
+      } else {
+        const task = { ...this.form }
+        task.project = 1
+        await this.$store.dispatch('task/addTask', task)
+        this.showModal = false
+      }
     },
     async showTask(taskId) {
-      await this.$store.dispatch('task/getTask', taskId)
-      this.form = { ...this.$store.state.task.task }
-    }
+      if (taskId) {
+        await this.$store.dispatch('task/getTask', taskId)
+        this.form = { ...this.$store.state.task.task }
+      } else {
+        this.form = {
+          label: null,
+          description: null,
+          provisional_start: null,
+          provisional_end: null,
+          provisional_time: null,
+          is_billable: null,
+          is_ended: null,
+          project: null,
+        }
+      }
+    },
+    getTaskTimers(taskId) {
+      this.$store.dispatch('task_timer/getTaskTimers', taskId)
+    },
   }
 }
 
@@ -284,4 +292,8 @@ export default {
   margin: auto auto;
 }
 
+.gTimerTask{
+  display: flex;
+  flex-direction: row;
+}
 </style>

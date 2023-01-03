@@ -32,7 +32,7 @@ export const actions = {
   async getTaskTimers({ commit }, taskId) {
     try {
       const { data } = await this.$axios.get(`/task_timer/${taskId}`)
-      commit('SET_TASK_TIMERS', data)
+      commit('SET_TASK_TIMERS', data.data)
     } catch (error) {
       console.error(error)
       throw error
@@ -42,7 +42,7 @@ export const actions = {
   async addTaskTimer({ commit }, taskId) {
     try {
       const { data } = await this.$axios.post(`/task_timer/${taskId}/start/`)
-      commit('ADD_TASK_TIMER', data)
+      commit('ADD_TASK_TIMER', data.data)
     } catch (error) {
       console.error(error)
       throw error
@@ -52,7 +52,7 @@ export const actions = {
   async stopTaskTimer({ commit }, taskTimerId) {
     try {
       const { data } = await this.$axios.post(`/task_timer/${taskTimerId}/stop/`)
-      commit('STOP_TASK_TIMER', data)
+      commit('STOP_TASK_TIMER', data.data)
     } catch (error) {
       console.log(error)
       throw error
@@ -61,7 +61,7 @@ export const actions = {
   // This action delete an existing tasktimer
   async deleteTaskTimer({ commit }, taskTimerId) {
     try {
-      await this.$axios.delete(`/api/task-timers/${taskTimerId}/delete`)
+      await this.$axios.delete(`/task_timer/${taskTimerId}/delete/`)
       commit('DELETE_TASK_TIMER', taskTimerId)
     } catch (error) {
       console.error(error)

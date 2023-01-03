@@ -65,7 +65,7 @@ export const actions = {
   // This action update an existing task
   async updateTask ({ commit }, task) {
     try {
-      const { data } = await this.$axios.put('/task/update', task)
+      const { data } = await this.$axios.patch('/task/update', task)
       commit('UPDATE_TASK', data.data)
     } catch (error) {
       console.err(error)
