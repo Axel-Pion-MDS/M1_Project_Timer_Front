@@ -17,16 +17,20 @@
             </v-list-item-title>
             <div v-if="user_organization_length >= 1">
               <v-list-item-subtitle v-if="user_organization_length >= 2">
-                toto
+                <nuxt-link to="/organization">
+                  See your organization
+                </nuxt-link>
               </v-list-item-subtitle>
               <v-list-item-subtitle v-else>
                 <nuxt-link to="/organization">
-                  Create one!
+                  See your organization
                 </nuxt-link>
               </v-list-item-subtitle>
             </div>
             <v-list-item-subtitle v-else>
-              Créer une organization
+              <nuxt-link to="/organization">
+                Create an organization!
+              </nuxt-link>
             </v-list-item-subtitle>
           </div>
         </v-list-item-content>
@@ -72,28 +76,6 @@
 
           <v-list-item-content>
             <v-list-item-title>{{ task.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-list
-        dense
-        nav
-      >
-        <div class="nav-section-title">
-          <span>analyse</span>
-        </div>
-        <v-list-item
-          v-for="analyse in analyses"
-          :key="analyse.title"
-          :to="analyse.to"
-          link
-        >
-          <v-list-item-icon>
-            <v-icon>{{ analyse.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ analyse.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -190,18 +172,6 @@ export default {
         title: 'Tasks',
         to: '/',
       }],
-      analyses: [
-        {
-          icon: 'mdi-calendar-month-outline',
-          title: 'Calender',
-          to: '/calender',
-        },
-        {
-          icon: 'mdi-chart-line',
-          title: 'Charts',
-          to: '/charts',
-        }
-      ],
       workspaces: [
         {
           icon: 'mdi-briefcase-outline',
@@ -234,7 +204,7 @@ export default {
       this.user.initials = (this.user.firstname).charAt(0) + (this.user.lastname).charAt(0)
 
       this.user_organization_length = this.user.organizations === 'null' ? [].length : this.user.organizations.length
-      if (this.user_organization_length === 1) {
+      if (this.user_organization_length >= 1) {
         this.$store.dispatch('organization/setOrganization', this.user.organizations[0])
       }
     }

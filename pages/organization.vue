@@ -4,8 +4,11 @@
     v-model="valid"
     class="my-8"
     lazy-validation
-    @submit.prevent="login"
+    @submit.prevent="actionOrganization"
   >
+    <h2 class="my-8">
+      Organization info
+    </h2>
     <v-container>
       <v-row class="d-flex flex-column">
         <v-col
@@ -13,8 +16,9 @@
         >
           <v-text-field
             v-model="form.label"
-            :rules="[rules.required(), rules.isEmail()]"
+            :rules="[rules.required()]"
             label="Label"
+            :disabled="userRole"
             validate-on-blur
             outlined
             required
@@ -24,21 +28,45 @@
           cols="12"
         >
           <v-textarea
+            v-model="form.description"
             filled
+            :rules="[rules.required()]"
+            :disabled="userRole"
             name="input-7-4"
-            label="Filled textarea"
+            label="Description"
+            validate-on-blur
+            outlined
+            required
           />
+        </v-col>
+        <v-col v-if="!userRole" cols="4">
+          <v-btn
+            class="black--text"
+            :disabled="!valid"
+            color="primary"
+            type="submit"
+          >
+            {{ Object.keys(organization).length !== 0 ? 'Update organization info' : 'Create organization' }}
+          </v-btn>
         </v-col>
         <v-col
           cols="12"
         >
-          <div class="text-center">
-            <v-btn @click="showModal = true">
-              Edit
+          <div v-if="Object.keys(organization).length !== 0" class="d-flex text-center justify-space-between my-8">
+            <h2>
+              Organization users
+            </h2>
+            <v-btn v-if="!userRole" @click="showModal = true">
+              Add new user
             </v-btn>
             <v-dialog v-model="showModal" width="500">
               <v-card>
-                <v-form ref="userForm" class="" @submit.prevent="addUser">
+                <v-form
+                  ref="userForm"
+                  v-model="form_user_valid"
+                  class=""
+                  @submit.prevent="addUser"
+                >
                   <div class="d-flex flex-column justify-center align-center">
                     <v-col
                       cols="12"
@@ -58,9 +86,12 @@
                       <v-select
                         v-model="form_user.role"
                         :items="roles"
+                        :rules="[rules.required()]"
                         item-text="label"
                         item-value="id"
+                        required
                         chips
+                        validate-on-blur
                         label="Select organizations"
                         solo
                         flat
@@ -69,10 +100,15 @@
                       />
                     </v-col>
                     <v-card-actions>
-                      <v-btn color="primary" type="submit">
-                        Submit
+                      <v-btn
+                        class="black--text"
+                        :disabled="!form_user_valid"
+                        color="primary"
+                        type="submit"
+                      >
+                        Add user
                       </v-btn>
-                      <v-btn color="primary" @click="cancelDialog">
+                      <v-btn color="red" @click="cancelDialog">
                         Fermer
                       </v-btn>
                     </v-card-actions>
@@ -81,7 +117,7 @@
               </v-card>
             </v-dialog>
           </div>
-          <v-simple-table dark>
+          <v-simple-table v-if="Object.keys(organization).length !== 0" dark>
             <template #default>
               <thead>
                 <tr>
@@ -97,7 +133,7 @@
                   <th class="text-left">
                     Role
                   </th>
-                  <th class="text-left">
+                  <th v-if="!userRole" class="text-left">
                     Actions
                   </th>
                 </tr>
@@ -111,7 +147,7 @@
                   <td>{{ user.lastname }}</td>
                   <td>{{ user.email }}</td>
                   <td>{{ user.role.label }}</td>
-                  <td>
+                  <td v-if="!userRole">
                     <v-icon
                       small
                       class="mr-2"
@@ -131,14 +167,6 @@
             </template>
           </v-simple-table>
         </v-col>
-        <v-btn
-          class="black--text"
-          :disabled="!valid"
-          color="primary"
-          type="submit"
-        >
-          Login
-        </v-btn>
       </v-row>
     </v-container>
   </v-form>
@@ -154,10 +182,7 @@ export default {
       showModal: false,
       rules,
       valid: true,
-      form: {
-        label: '',
-        password: ''
-      },
+      form_user_valid: true,
       form_user: {
         email: '',
         role: ''
@@ -166,10 +191,19 @@ export default {
   },
   computed: {
     organization() {
-      return this.$store.state.organization.organization
+      return this.$store.state.organization?.organization
     },
     roles() {
       return this.$store.getters['role/getOrganizationRoles']
+    },
+    form() {
+      return {
+        label: this.organization.label,
+        description: this.organization.description
+      }
+    },
+    userRole() {
+      return this.$store.state.organization?.user_organization_role.label === 'ROLE_ORGANIZATION_MEMBER'
     }
   },
   async beforeMount() {
@@ -206,6 +240,17 @@ export default {
     addUser() {
       if (this.$store.state.organization.user_organization_role.label !== 'ROLE_ORGANIZATION_MEMBER') {
         this.$store.dispatch('organization/addUserOrganization', this.form_user)
+        this.cancelDialog()
+      }
+    },
+    actionOrganization() {
+      if (Object.keys(this.organization).length !== 0) {
+        if (this.$store.state.organization.user_organization_role.label !== 'ROLE_ORGANIZATION_MEMBER') {
+          this.$store.dispatch('organization/updateOrganization', this.form)
+        }
+      } else {
+        this.$store.dispatch('organization/addOrganization', this.form)
+        this.$router.push('/')
       }
     },
   },
