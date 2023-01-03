@@ -91,6 +91,7 @@
                   item-text="label"
                   item-value="id"
                   label="Select organizations"
+                  class="add_team_select_organization"
                   solo
                   flat
                   outlined
@@ -139,8 +140,8 @@ export default {
     this.organizations = this.$store.getters['organizationsSelector/getOrganizations']
   },
   methods: {
-    async deleteTeam(id) {      
-      if (await this.$store.dispatch('organizationsSelector/deleteTeam', id) ) {
+    async deleteTeam(id) {
+      if (await this.$store.dispatch('organizationsSelector/deleteTeam', id)) {
         await this.$store.dispatch('snackbar/success', {
           message: 'This team has been deleted',
           timer: 4000
@@ -194,6 +195,10 @@ export default {
 
     .teams_cards_items{
       gap: 36px;
+    }
+
+    .v-select-list::v-deep .v-list-item__content{
+      flex: unset!important;
     }
 
   </style>
