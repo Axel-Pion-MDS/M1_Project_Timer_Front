@@ -5,5 +5,11 @@ export default axios => ({
   },
   deleteTeam(id = 0) {
     return axios.delete(`/team/delete/${id}`)
+  },
+  addTeam(form) {
+    return axios.post('/team/add', form)
+  },
+  updateTeam(form) {
+    return axios.patch('/team/update', form)
   }
 })

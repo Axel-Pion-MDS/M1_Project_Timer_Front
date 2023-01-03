@@ -62,6 +62,48 @@ export const actions = {
       }, { root: true })
       // eslint-disable-next-line no-undef
       dispatch('teams')
+    } else {
+      await dispatch('snackbar/error', {
+        message: request.message,
+        timer: 4000
+      }, { root: true })
     }
+  },
+  async newTeam({ commit, state, dispatch }, form) {
+    const request = await this.$apis.team.addTeam(form)
+    if (request.status === 200) {
+      // eslint-disable-next-line no-undef
+      await dispatch('snackbar/success', {
+        message: 'This team has been created',
+        timer: 4000
+      }, { root: true })
+      // eslint-disable-next-line no-undef
+      dispatch('teams')
+    } else {
+      await dispatch('snackbar/error', {
+        message: request.message,
+        timer: 4000
+      }, { root: true })
+    }
+    return true
+  },
+  async updateTeam({ commit, state, dispatch }, form) {
+    const request = await this.$apis.team.updateTeam(form)
+    console.log(request)
+    if (request.status === 200) {
+      // eslint-disable-next-line no-undef
+      await dispatch('snackbar/success', {
+        message: 'This team has been updated',
+        timer: 4000
+      }, { root: true })
+      // eslint-disable-next-line no-undef
+      dispatch('teams')
+    } else {
+      await dispatch('snackbar/error', {
+        message: request.message,
+        timer: 4000
+      }, { root: true })
+    }
+    return true
   }
 }
