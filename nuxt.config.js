@@ -11,7 +11,7 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - timer',
-    title: 'timer',
+    title: 'Project timer',
     htmlAttrs: {
       lang: 'en'
     },
@@ -33,12 +33,14 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/axios.js' },
+    { src: '~/plugins/apis.js' },
+    { src: '~/plugins/client-only.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
@@ -54,7 +56,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: '/'
+    baseURL: 'https://timer.sylvaindendele.com'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -64,7 +66,7 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: '#ECEBC4',
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
