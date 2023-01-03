@@ -243,6 +243,7 @@ export default {
       const task = { ...this.form}
       task.project = this.form.project.id
       await this.$store.dispatch('task/updateTask', task)
+
     },
     async showTask(taskId) {
       await this.$store.dispatch('task/getTask', taskId)
