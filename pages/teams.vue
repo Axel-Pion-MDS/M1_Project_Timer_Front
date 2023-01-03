@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h1>Teams</h1>
-    <OrganizationsSelector :callback="test" />
+    <OrganizationsSelector :callback="selectOrganization" />
     <TeamsCards />
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
     await this.$store.dispatch('organizationsSelector/teams')
   },
   methods: {
-    async test() {
+    async selectOrganization() {
       await this.$store.dispatch('organizationsSelector/teams')
     }
   }

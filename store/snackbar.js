@@ -14,7 +14,8 @@ export const mutations = {
 }
 
 export const actions = {
-  async success({ commit }, data) {
+  async success({ commit, dispatch }, data) {
+    await dispatch('delete', {})
     await commit('setSnackbar', {
       show: true,
       mode: 'success',
@@ -22,12 +23,21 @@ export const actions = {
       timer: data.timer
     })
   },
-  async error({ commit }, data) {
+  async error({ commit, dispatch }, data) {
+    await dispatch('delete', {})
     await commit('setSnackbar', {
       show: true,
       mode: 'error',
       message: data.message,
       timer: data.timer
+    })
+  },
+  async delete({ commit }, data) {
+    await commit('setSnackbar', {
+      show: false,
+      mode: 'error',
+      message: '',
+      timer: 0
     })
   }
 }
