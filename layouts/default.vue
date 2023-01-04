@@ -15,46 +15,40 @@
             <v-list-item-title class="text-h6">
               {{ user.email }}
             </v-list-item-title>
-            <div v-if="user_organization_length >= 1">
-              <v-list-item-subtitle v-if="user_organization_length >= 2">
-                <nuxt-link to="/organization">
-                  See your organization
-                </nuxt-link>
-              </v-list-item-subtitle>
-              <v-list-item-subtitle v-else>
-                <nuxt-link to="/organization">
-                  See your organization
-                </nuxt-link>
-              </v-list-item-subtitle>
-            </div>
-            <v-list-item-subtitle v-else>
-              <nuxt-link to="/organization">
-                Create an organization!
-              </nuxt-link>
-            </v-list-item-subtitle>
           </div>
         </v-list-item-content>
       </v-list-item>
 
       <v-divider />
 
-      <v-list
-        dense
-        nav
-      >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.to"
-          link
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+      <v-list dense>
+        <v-list-item>
+          <div v-if="user_organization_length >= 1">
+            <v-list-item-subtitle v-if="user_organization_length >= 2">
+              <nuxt-link to="/organization">
+                See your organization
+              </nuxt-link>
+              <v-select
+                v-model="defaultOrganization"
+                class="truncate"
+                :items="user.organizations"
+                item-text="label"
+                item-value="id"
+                return-object
+                @change="changeOrganization"
+              />
+            </v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="truncate">
+              <nuxt-link to="/organization">
+                See your organization :  {{ user.organizations[0].label }}
+              </nuxt-link>
+            </v-list-item-subtitle>
+          </div>
+          <v-list-item-subtitle v-else>
+            <nuxt-link to="/organization">
+              Create an organization!
+            </nuxt-link>
+          </v-list-item-subtitle>
         </v-list-item>
       </v-list>
       <v-list
@@ -191,8 +185,13 @@ export default {
         }
       ],
       user: {},
-      user_organization_length: []
+      user_organization_length: [],
 
+    }
+  },
+  computed: {
+    defaultOrganization() {
+      return this.$store.state.user.user.organizations[0]
     }
   },
   async beforeMount() {
@@ -211,7 +210,11 @@ export default {
   },
   methods: {
     async logout() {
+      await this.$store.dispatch('organization/clearOrganization')
       await this.$store.dispatch('user/logOut')
+    },
+    changeOrganization(e) {
+      this.$store.dispatch('organization/setOrganization', e)
     }
   }
 }
@@ -241,5 +244,11 @@ export default {
 .logout {
   position: absolute;
   bottom: 0;
+}
+.truncate {
+  width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
