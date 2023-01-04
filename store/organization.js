@@ -60,6 +60,40 @@ export const actions = {
       }, { root: true })
     }
   },
+  async deleteUserOrganization({ dispatch, state }, email) {
+    const response = await this.$apis.organization.delete_user_organization(state.organization.id, email)
+    if (response.data.code === 200) {
+      await dispatch('snackbar/success', {
+        message: 'This user has been deleted',
+        timer: 4000
+      }, { root: true })
+      await dispatch('setOrganization', state.organization)
+      return true
+    } else {
+      await dispatch('snackbar/error', {
+        message: response.data.message,
+        timer: 4000
+      }, { root: true })
+    }
+  },
+  async updateUserOrganizationRole({ dispatch, state }, payload) {
+    const response = await this.$apis.organization.update_user_organization_role(
+      state.organization.id, payload.userEmail, payload.userNewRole
+    )
+    if (response.data.code === 201) {
+      await dispatch('snackbar/success', {
+        message: 'The user role has been updated',
+        timer: 4000
+      }, { root: true })
+      await dispatch('setOrganization', state.organization)
+      return true
+    } else {
+      await dispatch('snackbar/error', {
+        message: response.data.message,
+        timer: 4000
+      }, { root: true })
+    }
+  },
   async updateOrganization({ dispatch, state }, form) {
     form.organization = state.organization.id
     const response = await this.$apis.organization.update_organization(form, state.organization.id)
