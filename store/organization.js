@@ -22,11 +22,6 @@ export const mutations = {
 }
 
 export const actions = {
-//   async getOrganization({ commit, dispatch }, organization) {
-//     // console.log(state.organization)
-//     const response = await this.$apis.organization.get_organization(organization.id)
-//     console.log(response)
-//   },
   async setOrganization({ commit, state, rootState }, organization) {
     const response = await this.$apis.organization.get_organization(organization.id)
     if (response.status === 200) {
@@ -126,5 +121,10 @@ export const actions = {
         timer: 4000
       }, { root: true })
     }
+  },
+  clearOrganization({ commit }) {
+    const empty = {}
+    commit('setOrganization', empty)
+    commit('setUserOrganizationRole', empty)
   }
 }

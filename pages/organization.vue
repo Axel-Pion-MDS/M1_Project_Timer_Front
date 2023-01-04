@@ -92,7 +92,7 @@
                         required
                         chips
                         validate-on-blur
-                        label="Select organizations"
+                        label="Select role"
                         solo
                         flat
                         outlined
@@ -258,13 +258,11 @@ export default {
         }
       } else {
         this.$store.dispatch('organization/addOrganization', this.form)
-        this.$router.push('/')
       }
     },
     deleteUser(email) {
       if (!this.isOrganizationMember) {
         this.$store.dispatch('organization/deleteUserOrganization', email)
-        this.cancelDialog()
       }
     },
     updateUserRole(email, role) {
