@@ -18,7 +18,7 @@
             v-model="form.label"
             :rules="[rules.required()]"
             label="Label"
-            :disabled="userRole"
+            :readonly="isOrganizationMember"
             validate-on-blur
             outlined
             required
@@ -31,7 +31,7 @@
             v-model="form.description"
             filled
             :rules="[rules.required()]"
-            :disabled="userRole"
+            :readonly="isOrganizationMember"
             name="input-7-4"
             label="Description"
             validate-on-blur
@@ -39,7 +39,7 @@
             required
           />
         </v-col>
-        <v-col v-if="!userRole" cols="4">
+        <v-col v-if="!isOrganizationMember" cols="4">
           <v-btn
             class="black--text"
             :disabled="!valid"
@@ -56,7 +56,7 @@
             <h2>
               Organization users
             </h2>
-            <v-btn v-if="!userRole" @click="showModal = true">
+            <v-btn v-if="!isOrganizationMember" @click="showModal = true">
               Add new user
             </v-btn>
             <v-dialog v-model="showModal" width="500">
@@ -92,7 +92,7 @@
                         required
                         chips
                         validate-on-blur
-                        label="Select organizations"
+                        label="Select role"
                         solo
                         flat
                         outlined
@@ -133,8 +133,8 @@
                   <th class="text-left">
                     Role
                   </th>
-                  <th v-if="!userRole" class="text-left">
-                    Actions
+                  <th v-if="!isOrganizationMember" class="text-left">
+                    Delete
                   </th>
                 </tr>
               </thead>
@@ -146,18 +146,25 @@
                   <td>{{ user.firstname }}</td>
                   <td>{{ user.lastname }}</td>
                   <td>{{ user.email }}</td>
-                  <td>{{ user.role.label }}</td>
-                  <td v-if="!userRole">
+                  <td v-if="!isOrganizationMember">
+                    <v-select
+                      class="roleSelect"
+                      :hint="`Current role : ${user.role.label}`"
+                      persistent-hint
+                      :items="roles"
+                      item-text="label"
+                      item-value="id"
+                      return-object
+                      @change="updateUserRole(user.email, $event)"
+                    />
+                  </td>
+                  <td v-else>
+                    {{ user.role.label }}
+                  </td>
+                  <td v-if="!isOrganizationMember">
                     <v-icon
                       small
-                      class="mr-2"
-                      @click="editItem(item)"
-                    >
-                      mdi-pencil
-                    </v-icon>
-                    <v-icon
-                      small
-                      @click="deleteItem(item)"
+                      @click="deleteUser(user.email)"
                     >
                       mdi-delete
                     </v-icon>
@@ -181,6 +188,7 @@ export default {
       dialog: false,
       showModal: false,
       rules,
+      selectedRole: '',
       valid: true,
       form_user_valid: true,
       form_user: {
@@ -202,7 +210,7 @@ export default {
         description: this.organization.description
       }
     },
-    userRole() {
+    isOrganizationMember() {
       return this.$store.state.organization?.user_organization_role.label === 'ROLE_ORGANIZATION_MEMBER'
     }
   },
@@ -238,21 +246,30 @@ export default {
       this.resetValidationUserForm()
     },
     addUser() {
-      if (this.$store.state.organization.user_organization_role.label !== 'ROLE_ORGANIZATION_MEMBER') {
+      if (!this.isOrganizationMember) {
         this.$store.dispatch('organization/addUserOrganization', this.form_user)
         this.cancelDialog()
       }
     },
     actionOrganization() {
       if (Object.keys(this.organization).length !== 0) {
-        if (this.$store.state.organization.user_organization_role.label !== 'ROLE_ORGANIZATION_MEMBER') {
+        if (!this.isOrganizationMember) {
           this.$store.dispatch('organization/updateOrganization', this.form)
         }
       } else {
         this.$store.dispatch('organization/addOrganization', this.form)
-        this.$router.push('/')
       }
     },
+    deleteUser(email) {
+      if (!this.isOrganizationMember) {
+        this.$store.dispatch('organization/deleteUserOrganization', email)
+      }
+    },
+    updateUserRole(email, role) {
+      if (!this.isOrganizationMember) {
+        this.$store.dispatch('organization/updateUserOrganizationRole', { userEmail: email, userNewRole: role })
+      }
+    }
   },
 }
 
@@ -287,5 +304,13 @@ export default {
   .wap-form{
     margin: auto auto;
   }
-
+  .roleSelect {
+    max-width: 300px;
+    .v-select__selection.v-select__selection--comma {
+      position: absolute;
+    }
+    .v-messages__message {
+        color: $accent-color !important;
+      }
+  }
   </style>

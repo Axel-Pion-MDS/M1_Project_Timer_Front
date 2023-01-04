@@ -22,11 +22,6 @@ export const mutations = {
 }
 
 export const actions = {
-//   async getOrganization({ commit, dispatch }, organization) {
-//     // console.log(state.organization)
-//     const response = await this.$apis.organization.get_organization(organization.id)
-//     console.log(response)
-//   },
   async setOrganization({ commit, state, rootState }, organization) {
     const response = await this.$apis.organization.get_organization(organization.id)
     if (response.status === 200) {
@@ -49,6 +44,40 @@ export const actions = {
     if (response.data.code === 201) {
       await dispatch('snackbar/success', {
         message: 'This user has been added',
+        timer: 4000
+      }, { root: true })
+      await dispatch('setOrganization', state.organization)
+      return true
+    } else {
+      await dispatch('snackbar/error', {
+        message: response.data.message,
+        timer: 4000
+      }, { root: true })
+    }
+  },
+  async deleteUserOrganization({ dispatch, state }, email) {
+    const response = await this.$apis.organization.delete_user_organization(state.organization.id, email)
+    if (response.data.code === 200) {
+      await dispatch('snackbar/success', {
+        message: 'This user has been deleted',
+        timer: 4000
+      }, { root: true })
+      await dispatch('setOrganization', state.organization)
+      return true
+    } else {
+      await dispatch('snackbar/error', {
+        message: response.data.message,
+        timer: 4000
+      }, { root: true })
+    }
+  },
+  async updateUserOrganizationRole({ dispatch, state }, payload) {
+    const response = await this.$apis.organization.update_user_organization_role(
+      state.organization.id, payload.userEmail, payload.userNewRole
+    )
+    if (response.data.code === 201) {
+      await dispatch('snackbar/success', {
+        message: 'The user role has been updated',
         timer: 4000
       }, { root: true })
       await dispatch('setOrganization', state.organization)
@@ -92,5 +121,10 @@ export const actions = {
         timer: 4000
       }, { root: true })
     }
+  },
+  clearOrganization({ commit }) {
+    const empty = {}
+    commit('setOrganization', empty)
+    commit('setUserOrganizationRole', empty)
   }
 }
