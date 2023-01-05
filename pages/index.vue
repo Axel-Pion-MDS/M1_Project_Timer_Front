@@ -290,6 +290,10 @@ export default {
 .wap-form{
   margin: auto auto;
 }
+.container-mb{
+  display: flex;
+  justify-content: center;
+}
 
 .gTimerTask{
   display: flex;

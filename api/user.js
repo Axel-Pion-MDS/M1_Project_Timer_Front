@@ -7,11 +7,6 @@ export default axios => ({
     return axios.post('/user/add', form)
   },
   get_user(token) {
-    return axios.get(`/user/${token.id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('JWT')}`
-      }
-    }
-    )
+    return axios.get(`/user/${token.id}`)
   }
 })
