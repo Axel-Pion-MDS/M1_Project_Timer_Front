@@ -28,26 +28,28 @@
         v-for="task in filteredCards"
         :key="task.id"
         elevation="2"
+        style="height: fit-content"
       >
         <v-card-title>{{ task.label }}</v-card-title>
         <v-card-text>{{ task.description }}</v-card-text>
         <div>
           <div class="pl-4">
-            <span>{{ task.start }}</span>
+            <span>{{ task.provisional_start }}</span>
             <span class="arrow_right" />
-            <span>{{ task.end }}</span>
+            <span>{{ task.provisional_end }}</span>
           </div>
+          <TaskTimer :task="task" />
           <v-card-actions>
             <v-btn color="error" @click="deleteItem(task.id)">
               Supprimer
             </v-btn>
 
-            <v-btn @click="showModal = true">
+            <v-btn @click="showModal = true; showTask(task.id) ">
               Edit
             </v-btn>
             <v-dialog v-model="showModal" max-width="650">
               <v-card>
-                <form @submit.prevent="submitForm">
+                <form @submit.prevent="submitUpdateForm">
                   <div class="d-flex justify-center">
                     <v-col cols="5">
                       <v-autocomplete
@@ -84,7 +86,7 @@
                     class="wap-form"
                   >
                     <v-textarea
-                      v-model="form.title"
+                      v-model="form.label"
                       auto-grow
                       filled
                       color="deep-purple"
@@ -102,14 +104,12 @@
                     <div class="d-flex justify-space-between">
                       <div class="selectedDate">
                         <v-text-field
-                          v-model="selectedDate"
                           label="Beginning of the task"
                           placeholder="Cliquez pour sélectionner une date"
                           @click="showDatePicker = true"
                         />
                         <v-date-picker
                           v-if="showDatePicker"
-                          v-model="selectedDate"
                           @input="showDatePicker = false"
                         />
                       </div>
@@ -146,6 +146,18 @@
         </div>
       </v-card>
     </div>
+    <v-btn
+      class="mx-2"
+      fab
+      dark
+      color="indigo"
+      style="bottom: 15px;right: 0;position: absolute;"
+      @click="showTask(),showModal = true;"
+    >
+      <v-icon dark>
+        mdi-plus
+      </v-icon>
+    </v-btn>
   </div>
 </template>
 
@@ -154,39 +166,8 @@ export default {
   name: 'IndexPage',
   data() {
     return {
-      tasks: [
-        {
-          id: 1,
-          label: 'test01',
-          // eslint-disable-next-line vue/max-len
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec risus felis, mollis eu justo in, feugiat porta magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
-          start: '2022-10-11 18:10:15',
-          end: '2022-10-11 18:55:12',
-          projectLabel: 'projects01',
-          projectDescription: 'Lorem ipsum dolor sit amet',
-        },
-        {
-          id: 2,
-          label: 'test02',
-          // eslint-disable-next-line vue/max-len
-          description: 'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
-          start: '2022-10-17 02:10:15',
-          end: '2022-10-18 16:55:12',
-          projectLabel: 'projects02',
-          projectDescription: 'Lorem ipsum dolor sit amet',
-        },
-        {
-          id: 3,
-          label: 'test03',
-          // eslint-disable-next-line vue/max-len
-          description: 'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur rhoncus est in feugiat tempor. Quisque at sodales purus. Ut quis elit nec tellus tincidunt feugiat.',
-          start: '2022-10-17 02:10:15',
-          end: '2022-10-18 16:55:12',
-          projectLabel: 'projects01',
-          projectDescription: 'Lorem ipsum dolor sit amet',
-        },
-
-      ],
+      tasks: [],
+      taskTimers: [],
       selected: null,
       showModal: false,
       valuesUser: [],
@@ -199,45 +180,81 @@ export default {
         id: 2,
         name: 'lea',
       }],
-      projects: [
-        {
-          label: 'projects01',
-          nb_projects: 2,
-        },
-        {
-          label: 'projects02',
-          nb_projects: 1,
-        },
-      ],
+      projects: [],
       selectedDate: null,
       showDatePicker: false,
       selectedDate2: null,
       showDatePicker2: false,
       form: {
+        label: null,
         description: null,
-        title: null,
-        assignMenber: null,
-        startAt: null,
-        endAt: null,
-        assignProject: null
-      }
+        provisional_start: null,
+        provisional_end: null,
+        provisional_time: null,
+        is_billable: null,
+        is_ended: null,
+        project: null,
+      },
     }
   },
   computed: {
     filteredCards() {
       if (this.selected) {
-        console.log('ici')
-        return this.tasks.filter(task => task.projectLabel === this.selected)
+        return this.tasks.filter(task => task.project.label === this.selected)
       }
       return this.tasks
     },
   },
+  async mounted() {
+    await this.$store.dispatch('projectsSelector/getProjects')
+    this.projects = this.$store.getters['projectsSelector/getProjects']
+    await this.$store.dispatch('task/getTasks', this.projects[0].id)
+    this.tasks = this.$store.state.task.tasks
+  },
   methods: {
-    deleteItem() {
-
+    async deleteItem(taskId) {
+      await this.$store.dispatch('task/deleteTask', taskId)
+      this.tasks = this.$store.state.task.tasks
     },
-    submitForm() {
-      console.log(this.form)
+    async submitUpdateForm() {
+      if (this.form.id) {
+        const task = { ...this.form }
+        task.project = this.form.project.id
+        await this.$store.dispatch('task/updateTask', task)
+        this.showModal = false
+      } else {
+        const task = { ...this.form }
+        task.project = this.form.assignProject[0]
+        await this.$store.dispatch('task/addTask', task)
+        this.showModal = false
+      }
+      this.getdata()
+    },
+    async showTask(taskId) {
+      if (taskId) {
+        await this.$store.dispatch('task/getTask', taskId)
+        this.form = { ...this.$store.state.task.task }
+      } else {
+        this.form = {
+          label: null,
+          description: null,
+          provisional_start: null,
+          provisional_end: null,
+          provisional_time: null,
+          is_billable: null,
+          is_ended: null,
+          project: null,
+        }
+      }
+    },
+    getTaskTimers(taskId) {
+      this.$store.dispatch('task_timer/getTaskTimers', taskId)
+    },
+    async getdata() {
+      await this.$store.dispatch('projectsSelector/getProjects')
+      this.projects = this.$store.getters['projectsSelector/getProjects']
+      await this.$store.dispatch('task/getTasks', this.projects[0].id)
+      this.tasks = this.$store.state.task.tasks
     }
   }
 }
@@ -278,4 +295,8 @@ export default {
   justify-content: center;
 }
 
+.gTimerTask{
+  display: flex;
+  flex-direction: row;
+}
 </style>

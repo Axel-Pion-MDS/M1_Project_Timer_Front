@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/client
       - client_node_modules:/client/node_modules
-      - client_nuxt:/client/.nuxt
+      # - client_nuxt:/client/.nuxt
 volumes:
   client_node_modules:
   client_nuxt:
