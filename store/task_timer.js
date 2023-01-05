@@ -41,8 +41,7 @@ export const actions = {
   // Make a POST request to the API to add the new tasktimer for the task
   async addTaskTimer({ commit }, taskId) {
     try {
-      const { data } = await this.$axios.post(`/task_timer/${taskId}/start/`)
-      commit('ADD_TASK_TIMER', data.data)
+      await this.$axios.post(`/task_timer/${taskId}/start/`)
     } catch (error) {
       console.error(error)
       throw error
@@ -51,8 +50,7 @@ export const actions = {
   // This action stop an existing taskimer
   async stopTaskTimer({ commit }, taskTimerId) {
     try {
-      const { data } = await this.$axios.post(`/task_timer/${taskTimerId}/stop/`)
-      commit('STOP_TASK_TIMER', data.data)
+      await this.$axios.post(`/task_timer/${taskTimerId}/stop/`)
     } catch (error) {
       console.log(error)
       throw error

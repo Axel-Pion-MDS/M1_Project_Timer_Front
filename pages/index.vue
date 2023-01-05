@@ -28,6 +28,7 @@
         v-for="task in filteredCards"
         :key="task.id"
         elevation="2"
+        style="height: fit-content"
       >
         <v-card-title>{{ task.label }}</v-card-title>
         <v-card-text>{{ task.description }}</v-card-text>
@@ -179,18 +180,7 @@ export default {
         id: 2,
         name: 'lea',
       }],
-      projects: [
-        {
-          id: 1,
-          label: 'projects01',
-          nb_projects: 2,
-        },
-        {
-          id: 2,
-          label: 'projects02',
-          nb_projects: 1,
-        },
-      ],
+      projects: [],
       selectedDate: null,
       showDatePicker: false,
       selectedDate2: null,
@@ -215,8 +205,10 @@ export default {
       return this.tasks
     },
   },
-  mounted() {
-    this.$store.dispatch('task/getTasks', 1)
+  async mounted() {
+    await this.$store.dispatch('projectsSelector/getProjects')
+    this.projects = this.$store.getters['projectsSelector/getProjects']
+    await this.$store.dispatch('task/getTasks', this.projects[0].id)
     this.tasks = this.$store.state.task.tasks
   },
   methods: {
@@ -232,10 +224,11 @@ export default {
         this.showModal = false
       } else {
         const task = { ...this.form }
-        task.project = 1
+        task.project = this.form.assignProject[0]
         await this.$store.dispatch('task/addTask', task)
         this.showModal = false
       }
+      this.getdata()
     },
     async showTask(taskId) {
       if (taskId) {
@@ -257,6 +250,12 @@ export default {
     getTaskTimers(taskId) {
       this.$store.dispatch('task_timer/getTaskTimers', taskId)
     },
+    async getdata() {
+      await this.$store.dispatch('projectsSelector/getProjects')
+      this.projects = this.$store.getters['projectsSelector/getProjects']
+      await this.$store.dispatch('task/getTasks', this.projects[0].id)
+      this.tasks = this.$store.state.task.tasks
+    }
   }
 }
 

@@ -61,7 +61,7 @@ export default {
   methods: {
     async addTaskTimer() {
       await this.$store.dispatch('task_timer/addTaskTimer', this.task.id)
-      location.reload()
+      this.taskTimersList()
     },
     async stopTaskTimer(taskTimerId) {
       await this.$store.dispatch('task_timer/stopTaskTimer', taskTimerId)
